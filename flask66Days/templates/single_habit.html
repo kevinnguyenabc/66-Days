@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+<h2 style="text-align: center;">Single Habit</h2>
+  <div class="container" style="align-content: center; border-style: solid; margin-top:30px; padding: 25px 35px 35px;
+    width: 50%; border-radius: 15px; border-color: darkgrey;">
+        <div class="media-body">
+            <div class="article-metadata">
+                <small class="text-muted">{{ habit.date_created.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2>{{ habit.title }}</h2>
+            <p class="article-content">{{ habit.content }}</p>
+            {% if habit.author == current_user %}
+
+                <a class="btn btn-sm btn-secondary mt-1 mb-1" href="{{ url_for('update_habit', habit_id=habit.id) }}">Update</a>
+                <form action="{{ url_for('delete_habit', habit_id=habit.id) }}" method="POST">
+                  <input type="submit" class="btn btn-danger" value="Delete">
+                </form>
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="container" style="align-content: center; border-style: solid; margin: 100px auto; padding: 25px 35px 35px;
+    width: 40%; border-radius: 15px; border-color: darkgrey;">
+        <h4>{{ title }}</h4>
+        <br>
+        <form method="post" action="">
+            {{ form.hidden_tag() }}
+            <fieldset>
+                <div>
+                    {{ form.title.label(class="form-control-label") }}
+                    {{ form.title(class="form-control") }}
+                </div>
+            </fieldset>
+            <fieldset>
+                <div>
+                    {{ form.content.label(class="form-control-label") }}
+                    {{ form.content(class="form-control") }}
+                </div>
+            </fieldset>
+            <div>
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}

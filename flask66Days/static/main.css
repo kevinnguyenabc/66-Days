@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #363a46;
+    margin: 0px;
+    padding: 0px;
+    color: rgb(235, 235, 235);
+}
+
+
+header {
+    padding: 12px;
+    background-color: #272a33;
+    display: flex;
+    justify-content: flex-start;
+}
+
+
+header div {
+    padding: 7px 0px;
+}
+
+
+
+a {
+    text-decoration: none;
+    color: rgb(233, 233, 233);
+    transition: .5s ease;
+}
+
+
+.navlinks {
+    padding: 10px;
+}
+
+
+a.navlinks:hover, h2 a:hover {
+    color: rgb(70, 103, 211);
+}
+
+
+#logo {
+    font-size: 25px;
+    color: rgb(151, 211, 151);
+    padding: 0 5px;
+}
+
+#logo:hover {
+    color: rgb(86, 185, 86);
+}
+
+.homepage {
+    text-align: center;
+}
+
+
+.habits {
+    width: 85%;
+    margin: auto;
+    margin-top: 0;
+}
+
+.habits-list {  
+    margin-top: 0;
+    padding: 0;
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 250px;
+    grid-gap: 6% 2%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+li.habit {
+    padding: 5px 25px;
+    border: 2px solid rgb(148, 142, 142);
+    border-radius: 1em;
+    height: 15em;
+    text-overflow: ellipsis;
+    transition: .5s;
+    background: #353844;;
+}
+
+li.habit:hover {
+    transform: scale(1.04);
+    background: #272a33;;
+}
+
+.text-muted {
+    color: rgb(189, 189, 189);
+}
+
+.habit-content {
+    height: 5em;
+}
+
+.center{
+    text-align: center;
+}
+
+
+.check_in {
+    padding: 5px;
+    border: 1px rgb(209, 209, 255) solid;
+    color: rgb(217, 217, 255);
+    border-radius: 15px;
+}
+
+.check_in:hover {
+    background: rgb(75, 67, 134);
+}
+
+a.logout {
+    color: rgb(255, 187, 187);
+}
+
+a.logout:hover {
+    color: rgb(196, 79, 79);
+}
+a.login:hover {
+    color: rgb(113, 141, 105);
+}

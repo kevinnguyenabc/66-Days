@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div>
+        <h3>Which is the best programming language?</h3>
+        <form>
+            <input type="text" name="language">
+            <button type="submit" id="but">Submit</button>
+        </form>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='interactive.js') }}"></script>
+
+{% endblock content %}

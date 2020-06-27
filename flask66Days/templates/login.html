@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <div>
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <fieldset>
+                <div class="col">
+                    {{ form.username.label(class="form-control-label") }}
+                    {{ form.username }}
+                </div>
+            </fieldset>
+            {{ form.submit(class="btn btn-outline-info") }}
+        </form>
+    </div>
+
+{% endblock content %}

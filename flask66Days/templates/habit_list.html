@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 style="text-align: center;">Your Habits</h1>
+
+    <div class="habits">
+        <ul class="habits-list" id="sortable">
+            {% for habit in habits %}
+                <li class="ui-state-default habit">
+                        <div class="media-body">
+                            <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
+                            <h2 class="habit-title"><a href="{{ url_for('single_habit', habit_id=habit.id) }}">{{ habit.title }}</a></h2>
+                            <p class="habit-content">{{ habit.content }}</p>
+                                
+
+                            <a class="check_in" href="{{ url_for('check_in', habit_id=habit.id) }}" href="#">Check In &#10003;</a>
+                        </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <script>
+        function myfunction(){
+            console.log("Test");
+        };
+    </script>
+
+{% endblock content %}
+

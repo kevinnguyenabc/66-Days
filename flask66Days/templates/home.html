@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="homepage">
+        <h1>Home Page</h1>
+
+        {{ x.hello }}
+    </div>
+
+    <script>
+        var x = JSON.parse('{{ x | tojson | safe}}');
+    </script>
+    <script src="{{ url_for('static', filename='interactive.js') }}"></script>
+{% endblock content %}
