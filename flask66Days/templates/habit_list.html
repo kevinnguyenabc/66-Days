@@ -1,31 +1,31 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h1 style="text-align: center;">Your Habits</h1>
+    <div>
+        <h1 class="page-title">Your Habits</h1>
+    </div>
 
     <div class="habits">
         <ul class="habits-list" id="sortable">
             {% for habit in habits %}
-                <li class="ui-state-default habit">
-                        <div class="media-body">
+                <li class="habit" id="habit-{{habit.id}}">
+                        <div>
                             <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
                             <h2 class="habit-title"><a href="{{ url_for('single_habit', habit_id=habit.id) }}">{{ habit.title }}</a></h2>
                             <p class="habit-content">{{ habit.content }}</p>
-                                
-
-                            <a class="check_in" href="{{ url_for('check_in', habit_id=habit.id) }}" href="#">Check In &#10003;</a>
+                            
+                            {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
+                                <a id="{{habit.id}}" class="checked_in" >Checked In! &#10003;</a>
+                            {% else %}
+                                <a id="{{habit.id}}" class="check_in" onclick='checkin("{{habit.id}}")'>Check In &#10003;</a>
+                            {% endif %}
                         </div>
                 </li>
             {% endfor %}
         </ul>
     </div>
 
-
-    <script>
-        function myfunction(){
-            console.log("Test");
-        };
-    </script>
+    <script src="{{ url_for('static', filename='checkin.js') }}"></script>
 
 {% endblock content %}
 

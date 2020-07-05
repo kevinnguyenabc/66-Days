@@ -18,17 +18,18 @@ class User(db.Model, UserMixin):
 class Habit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.now)
     content = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    checkins = db.relationship('CheckIn', backref='cihabit', lazy=True)
 
     def __repr__(self):
         return f"Habit('{self.title}', '{self.date_created}')"
 
-class CheckIns(db.Model):
+class CheckIn(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     day = db.Column(db.Integer, nullable=False)
     habit_id = db.Column(db.Integer, db.ForeignKey("habit.id"), nullable=False)
 
     def __repr__(self):
-        return f"CheckIns(Habit '{self.habit_id}', '{self.day}')"
+        return f"CheckIn(Habit '{self.habit_id}', '{self.day}')"

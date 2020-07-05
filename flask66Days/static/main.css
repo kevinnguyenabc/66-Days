@@ -22,11 +22,10 @@ header div {
 }
 
 
-
 a {
     text-decoration: none;
     color: rgb(233, 233, 233);
-    transition: .5s ease;
+    transition: .3s ease;
 }
 
 
@@ -44,16 +43,26 @@ a.navlinks:hover, h2 a:hover {
     font-size: 25px;
     color: rgb(151, 211, 151);
     padding: 0 5px;
+    transition: 1s;
 }
 
 #logo:hover {
-    color: rgb(86, 185, 86);
+    color: rgb(78, 194, 78);
 }
 
 .homepage {
     text-align: center;
 }
+.homepage h1 {
+    margin: 20px;
+    font-size: 4em;
+    color:rgb(123, 199, 123);
+}
 
+.page-title {
+    text-align: center;
+    margin: 1%;
+}
 
 .habits {
     width: 85%;
@@ -108,8 +117,25 @@ li.habit:hover {
     border-radius: 15px;
 }
 
+.checked_in {
+    cursor: pointer;
+    padding: 5px;
+    border: 1px rgba(209, 209, 255, 0.445) solid;
+    color: rgba(217, 217, 255, 0.452);
+    border-radius: 15px;
+}
+
+.checked_in:hover {
+    content: "something"
+}
+
 .check_in:hover {
+    cursor: pointer;
     background: rgb(75, 67, 134);
+}
+
+.check_in:active {
+    background:rgb(66, 57, 131);
 }
 
 a.logout {
@@ -119,6 +145,58 @@ a.logout {
 a.logout:hover {
     color: rgb(196, 79, 79);
 }
+
+a.login {
+    color: rgb(223, 240, 236);
+}
+
 a.login:hover {
-    color: rgb(113, 141, 105);
+    color: rgb(125, 201, 224);
+}
+
+.update {
+    color: white;
+    vertical-align: middle;
+    font-size: 15px;
+    background-color: rgb(62, 109, 212);
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    transition: 0.3s ease;
+}
+.update:hover {
+    background-color: rgb(32, 80, 184);
+}
+
+.delete {   
+    margin-left: 20px;
+    color: white;
+    font-size: 15px;
+    background-color: rgb(212, 62, 62);
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    transition: 0.3s;
+}
+
+.delete:hover {
+    background-color: rgb(187, 17, 17);
+}
+
+.single-habit-page {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.single-habit { 
+    align-content: center;
+    border: 6px solid; 
+    margin: 30px; 
+    padding: 25px 35px 25px 35px;
+    border-radius: 15px; 
+    border-color: rgba(53, 68, 134, 0.315);
+}
+
+.habit-info {
+    text-align: center;
 }

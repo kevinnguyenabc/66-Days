@@ -2,24 +2,51 @@
 
 
 {% block content %}
-<h2 style="text-align: center;">Single Habit</h2>
-  <div class="container" style="align-content: center; border-style: solid; margin-top:30px; padding: 25px 35px 35px;
-    width: 50%; border-radius: 15px; border-color: darkgrey;">
-        <div class="media-body">
+    <h2 style="text-align: center;">Single Habit</h2>
+    <div class="single-habit-page">
+        <div id="habit-{{habit.id}}" class="single-habit">
             <div class="article-metadata">
-                <small class="text-muted">{{ habit.date_created.strftime('%Y-%m-%d') }}</small>
+                <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
             </div>
             <h2>{{ habit.title }}</h2>
-            <p class="article-content">{{ habit.content }}</p>
+            <p class="habit-content">{{ habit.content }}</p>
             {% if habit.author == current_user %}
+                <div style="display: grid; grid-template-columns: 66% 33%;">
+                    <div>
+                        {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
+                            <a id="{{habit.id}}" class="checked_in" >Checked In! &#10003;</a>
+                        {% else %}
+                            <a id="{{habit.id}}" class="check_in" onclick='checkin("{{habit.id}}")'>Check In &#10003;</a>
+                        {% endif %}
+                    </div>
+                    <div style="display: inline-flex">
+                        <a class="update" href="{{ url_for('update_habit', habit_id=habit.id) }}">Update</a>
+                        <form id="deleteForm" onclick='deleteHabit( "{{habit.id}}" )' method="POST">
+                            <input type="submit" class="delete" value="Delete">
+                        </form>
+                    </div>
+                </div>
 
-                <a class="btn btn-sm btn-secondary mt-1 mb-1" href="{{ url_for('update_habit', habit_id=habit.id) }}">Update</a>
-                <form action="{{ url_for('delete_habit', habit_id=habit.id) }}" method="POST">
-                  <input type="submit" class="btn btn-danger" value="Delete">
-                </form>
             {% endif %}
         </div>
-
+        <div class="habit-info">
+            <h2>Current Streak:</h2>
+            {% set counter = 0 %}
+            {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %}
+                {% set counter = 1 %}
+                {% set last = habit.checkins[habit.checkins|length-1].day %}
+                {% for i in range(habit.checkins|length-1, -1, -1) %}
+                    {% if habit.checkins[i].day == last-1 %}
+                        {% set counter = counter+1 %}
+                    {% endif %}
+                    {% set last = habit.checkins[i].day %}
+                {% endfor %}
+            {% endif %}
+            <h2>{{ counter }}</h2>
+        </div>
     </div>
 
+
+
+    <script src="{{ url_for('static', filename='checkin.js') }}"></script>
 {% endblock content %}
