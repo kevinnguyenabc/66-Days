@@ -55,7 +55,7 @@ def create_habit():
         db.session.commit()
         flash('Your habit has been created!', 'success')
         return redirect(url_for('habit_list'))
-    return render_template('create_habit.html', form = form, title='Create a New Habit', head='Create Habit Page') 
+    return render_template('create_habit.html', form = form, title='Create a New Habit', head='Create Habit Page', method="Begin your journey now!") 
     # This passes the flask form "HabitForm into create_habit.html"
 
 

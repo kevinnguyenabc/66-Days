@@ -31,18 +31,18 @@
         </div>
         <div class="habit-info">
             <h2>Current Streak:</h2>
-            {% set counter = 0 %}
-            {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %}
-                {% set counter = 1 %}
-                {% set last = habit.checkins[habit.checkins|length-1].day %}
-                {% for i in range(habit.checkins|length-1, -1, -1) %}
-                    {% if habit.checkins[i].day == last-1 %}
-                        {% set counter = counter+1 %}
+            {% set counter = [0] %}
+            {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days <= habit.checkins[-1].day+1 %}
+                {% set counter = [1] %}
+                {% set last = [habit.checkins[-1].day] %}
+                {% for i in range(habit.checkins|length-2, -1, -1) %}
+                    {% if habit.checkins[i].day == last.pop()-1 %}
+                        {% if counter.append(counter.pop() + 1) %}{% endif %}
                     {% endif %}
-                    {% set last = habit.checkins[i].day %}
+                    {% if last.append(habit.checkins[i].day) %}{% endif %}
                 {% endfor %}
             {% endif %}
-            <h2>{{ counter }}</h2>
+            <h2>{{ counter.pop() }} Days</h2>
         </div>
     </div>
 

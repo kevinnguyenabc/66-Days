@@ -25,7 +25,7 @@ header div {
 a {
     text-decoration: none;
     color: rgb(233, 233, 233);
-    transition: .3s ease;
+    transition: .3s ease; 
 }
 
 
@@ -89,12 +89,14 @@ li.habit {
     height: 15em;
     text-overflow: ellipsis;
     transition: .5s;
-    background: #353844;;
+    background: #353844;
+    box-shadow: 4px 4px 20px 2px rgba(0, 0, 0, 0.192);
 }
 
 li.habit:hover {
     transform: scale(1.04);
-    background: #272a33;;
+    background: #272a33;
+    box-shadow: 4px 4px 20px 2px rgba(0, 0, 0, 0.473);
 }
 
 .text-muted {
@@ -111,22 +113,12 @@ li.habit:hover {
 
 
 .check_in {
+    display: inline-block;
     padding: 5px;
-    border: 1px rgb(209, 209, 255) solid;
+    border: 1.5px rgb(209, 209, 255) solid;
     color: rgb(217, 217, 255);
     border-radius: 15px;
-}
-
-.checked_in {
-    cursor: pointer;
-    padding: 5px;
-    border: 1px rgba(209, 209, 255, 0.445) solid;
-    color: rgba(217, 217, 255, 0.452);
-    border-radius: 15px;
-}
-
-.checked_in:hover {
-    content: "something"
+    user-select: none;
 }
 
 .check_in:hover {
@@ -136,6 +128,15 @@ li.habit:hover {
 
 .check_in:active {
     background:rgb(66, 57, 131);
+    transform: scale(1.04);
+}
+
+.checked_in {
+    cursor: pointer;
+    padding: 5px;
+    border: 1.5px rgba(209, 209, 255, 0.445) solid;
+    color: rgba(217, 217, 255, 0.452);
+    border-radius: 15px;
 }
 
 a.logout {
@@ -143,7 +144,7 @@ a.logout {
 }
 
 a.logout:hover {
-    color: rgb(196, 79, 79);
+    color: rgb(255, 94, 94);
 }
 
 a.login {
@@ -189,14 +190,92 @@ a.login:hover {
 }
 
 .single-habit { 
+    background: rgb(64, 68, 78);
     align-content: center;
-    border: 6px solid; 
-    margin: 30px; 
+    margin: 3% 6%; 
     padding: 25px 35px 25px 35px;
     border-radius: 15px; 
-    border-color: rgba(53, 68, 134, 0.315);
+    box-shadow: 0px 0px 20px 0px rgba(38, 36, 49, 0.692);
 }
 
 .habit-info {
     text-align: center;
+}
+
+.create-habit-form {
+    width: 40%;
+    background-color: rgb(71, 76, 87);
+    border-radius: 15px;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    position: absolute;
+    padding: 1%;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.301);
+}
+
+.form-title {
+    text-align: center; 
+    
+}
+
+.form-description {
+    margin: 0;
+    text-align: center;
+    color: rgb(219, 219, 219);
+}
+
+.form-block {
+    margin: auto;
+    width: 80%;
+}
+
+.form-control-label {
+    margin-left: 5px;
+    font-size: 17px;
+}
+
+.form-input {
+    display: block;
+    color: white;
+    font-size: 15px;
+    background-color: rgb(64, 66, 75);
+    border-radius: 10px;
+    border: 3px solid rgb(64, 66, 75);    
+    padding: 15px 10px;
+    width: 95%;
+    margin: 5px;
+    line-height: 25px;
+    transition: 0.2s ease-out;
+}
+
+.form-input:focus {
+    outline: none;
+    box-shadow: 0px 0px 10px 2px rgba(90, 100, 128, 0.952);
+}
+
+.form-btn {
+    display: inline-block;
+    margin: 20px 10px;
+    font-family: 'Open Sans', sans-serif;
+    border-style: none;
+    padding: 6px 25px;
+    color: white;
+    background-color: rgb(49, 101, 197);
+    border-radius: 15px;
+    font-size: 17px;
+    transition: .4s ease;
+}
+
+.form-btn:hover {
+    background-color: rgb(40, 83, 161);
+}
+
+.form-btn-cancel {
+    background-color: rgb(235, 47, 47);
+}
+
+.form-btn-cancel:hover {
+    background-color:  rgb(167, 34, 34);
 }
