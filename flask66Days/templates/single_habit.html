@@ -2,6 +2,7 @@
 
 
 {% block content %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <h2 style="text-align: center;">Single Habit</h2>
     <div class="single-habit-page">
         <div id="habit-{{habit.id}}" class="single-habit">
@@ -11,7 +12,7 @@
             <h2>{{ habit.title }}</h2>
             <p class="habit-content">{{ habit.content }}</p>
             {% if habit.author == current_user %}
-                <div style="display: grid; grid-template-columns: 66% 33%;">
+                <div style="display: grid; grid-template-columns: 4fr 1fr;">
                     <div>
                         {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
                             <a id="{{habit.id}}" class="checked_in" >Checked In! &#10003;</a>
@@ -35,18 +36,38 @@
             {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days <= habit.checkins[-1].day+1 %}
                 {% set counter = [1] %}
                 {% set last = [habit.checkins[-1].day] %}
-                {% for i in range(habit.checkins|length-2, -1, -1) %}
+                {% for i in range(habit.checkins|length-2, -1, -1) if counter|length == 1 %}
                     {% if habit.checkins[i].day == last.pop()-1 %}
                         {% if counter.append(counter.pop() + 1) %}{% endif %}
+                    {% else %}
+                        {% if counter.insert(0, counter[0]) %}{% endif %}
                     {% endif %}
                     {% if last.append(habit.checkins[i].day) %}{% endif %}
                 {% endfor %}
             {% endif %}
-            <h2>{{ counter.pop() }} Days</h2>
+            <h2 id="streak-counter">{{ counter[0] }} Days</h2>
+            <br>
+            <h2>Progress:</h2>
+            graph
+
         </div>
+
+    </div>
+    
+    {% set checkins = [] %}
+    {% for checkin in habit.checkins %}
+        {% if checkins.append(checkin.day) %}{% endif %}
+    {% endfor %}
+
+    <div class="chart-container" style="display: block; margin: auto; width:1000px;">
+        <canvas id="myChart" height=200></canvas>
     </div>
 
-
-
+    <br><br>
+    <script>
+        let date_created = "{{habit.date_created}}"
+        let checkins = "{{checkins}}"
+    </script>
     <script src="{{ url_for('static', filename='checkin.js') }}"></script>
+    <script src="{{ url_for('static', filename='chart.js') }}"></script>
 {% endblock content %}

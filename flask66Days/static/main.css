@@ -2,7 +2,7 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
-    background-color: #363a46;
+    background-color: #393e4b;
     margin: 0px;
     padding: 0px;
     color: rgb(235, 235, 235);
@@ -186,7 +186,7 @@ a.login:hover {
 
 .single-habit-page {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
 }
 
 .single-habit { 
@@ -196,6 +196,11 @@ a.login:hover {
     padding: 25px 35px 25px 35px;
     border-radius: 15px; 
     box-shadow: 0px 0px 20px 0px rgba(38, 36, 49, 0.692);
+    transition: .7s;
+}
+
+.single-habit:hover {
+    transform: scale(1.015);
 }
 
 .habit-info {
@@ -239,11 +244,11 @@ a.login:hover {
 .form-input {
     display: block;
     color: white;
-    font-size: 15px;
+    font-size: 18px;
     background-color: rgb(64, 66, 75);
     border-radius: 10px;
     border: 3px solid rgb(64, 66, 75);    
-    padding: 15px 10px;
+    padding: 12px 10px;
     width: 95%;
     margin: 5px;
     line-height: 25px;
