@@ -3,13 +3,13 @@
 
 {% block content %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <h2 style="text-align: center;">Single Habit</h2>
+    <h2 style="text-align: center;">{{ habit.title }}</h2>
     <div class="single-habit-page">
         <div id="habit-{{habit.id}}" class="single-habit">
             <div class="article-metadata">
                 <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
             </div>
-            <h2>{{ habit.title }}</h2>
+            <h3 style="margin-top: 1%;">Habit Content:</h3>
             <p class="habit-content">{{ habit.content }}</p>
             {% if habit.author == current_user %}
                 <div style="display: grid; grid-template-columns: 4fr 1fr;">
@@ -17,7 +17,7 @@
                         {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
                             <a id="{{habit.id}}" class="checked_in" >Checked In! &#10003;</a>
                         {% else %}
-                            <a id="{{habit.id}}" class="check_in" onclick='checkin("{{habit.id}}")'>Check In &#10003;</a>
+                            <a id="{{habit.id}}" class="check_in" onclick='checkin("{{habit.id}}"); addData();'>Check In &#10003;</a>
                         {% endif %}
                     </div>
                     <div style="display: inline-flex">
@@ -31,7 +31,7 @@
             {% endif %}
         </div>
         <div class="habit-info">
-            <h2>Current Streak:</h2>
+            <h2 style="margin-bottom: 5px;">Current Streak:</h2>
             {% set counter = [0] %}
             {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days <= habit.checkins[-1].day+1 %}
                 {% set counter = [1] %}
@@ -45,10 +45,13 @@
                     {% if last.append(habit.checkins[i].day) %}{% endif %}
                 {% endfor %}
             {% endif %}
-            <h2 id="streak-counter">{{ counter[0] }} Days</h2>
-            <br>
-            <h2>Progress:</h2>
-            graph
+            <h2 style="margin-top: 0; margin-bottom: 8%;" id="streak-counter">{{ counter[0] }} Days</h2>
+            <h2 style="margin-bottom: 10px;">Progress:</h2>
+            <!-- <progress max="66" value="{{ habit.checkins|length}}"></progress> -->
+            <div style="--width: 0; margin-top:0;"  class="progress-bar">
+                <div class="progress-done"></div>
+                <div class="progress-text">{{ habit.checkins|length}} Days Completed</div>
+            </div>
 
         </div>
 
@@ -58,9 +61,9 @@
     {% for checkin in habit.checkins %}
         {% if checkins.append(checkin.day) %}{% endif %}
     {% endfor %}
-
-    <div class="chart-container" style="display: block; margin: auto; width:1000px;">
-        <canvas id="myChart" height=200></canvas>
+    <br>
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
     </div>
 
     <br><br>

@@ -7,8 +7,13 @@ function handleCheckIn(id){
     $("#habit-"+id).css("transform", "scale(1.1)")
     setTimeout( function () { $("#habit-"+id).css("transform", "scale(1.02)") }, 300); 
     let counter = $("#streak-counter");
+    console.log(counter.text())
     let days = counter.text().split(" ")[0];
     counter.text((parseInt(days)+1) + " Days");
+    let progress = $("div.progress-text");
+    console.log(progress);
+    days = progress.text().split(" ")[0];
+    progress.text((parseInt(days)+1) + " Days Completed");
 }
 
 function handleDeleteHabit(url){

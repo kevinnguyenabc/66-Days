@@ -1,11 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
-    background-color: #393e4b;
+    background-image: linear-gradient(to right, #393e4b, #2d3446);
     margin: 0px;
     padding: 0px;
     color: rgb(235, 235, 235);
+    height: auto;
 }
 
 
@@ -75,18 +80,18 @@ a.navlinks:hover, h2 a:hover {
     padding: 0;
     list-style-type: none;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 250px;
-    grid-gap: 6% 2%;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-auto-rows: 280px;
+    grid-gap: 5% 2%;
     flex-wrap: wrap;
     justify-content: flex-start;
 }
 
 li.habit {
-    padding: 5px 25px;
+    padding: 5px 25px 5px 25px;
     border: 2px solid rgb(148, 142, 142);
     border-radius: 1em;
-    height: 15em;
+    height: 100%;
     text-overflow: ellipsis;
     transition: .5s;
     background: #353844;
@@ -104,7 +109,37 @@ li.habit:hover {
 }
 
 .habit-content {
-    height: 5em;
+    height: 7em;
+    white-space: pre-line;
+    overflow: hidden;
+    margin: 0px 5px 5% 5px;
+}
+
+.habit-content:hover {
+    overflow: auto;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    border-radius: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1a9;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(109, 128, 153);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(86, 93, 116);
 }
 
 .center{
@@ -113,7 +148,6 @@ li.habit:hover {
 
 
 .check_in {
-    display: inline-block;
     padding: 5px;
     border: 1.5px rgb(209, 209, 255) solid;
     color: rgb(217, 217, 255);
@@ -186,13 +220,13 @@ a.login:hover {
 
 .single-habit-page {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .single-habit { 
-    background: rgb(64, 68, 78);
+    background: #404553;
     align-content: center;
-    margin: 3% 6%; 
+    margin: 3% 5% 3% 8%; 
     padding: 25px 35px 25px 35px;
     border-radius: 15px; 
     box-shadow: 0px 0px 20px 0px rgba(38, 36, 49, 0.692);
@@ -204,7 +238,63 @@ a.login:hover {
 }
 
 .habit-info {
+    margin: 3%;
     text-align: center;
+}
+
+.chart-container {
+    width: 80%;
+    margin: auto;
+}
+
+#myChart {
+    box-sizing: border-box;
+    padding: 30px 80px;
+    margin: auto;
+    display: block;
+    border-radius: 15px;
+    background-color: rgba(77, 81, 102, 0.76);
+    box-shadow: 0px 0px 20px 0px rgba(38, 36, 49, 0.267);
+    transition: 1s ease;
+}
+
+#myChart:hover {
+    box-shadow: 0px 0px 20px 2px rgba(38, 36, 49, 0.267);
+    transform: scale(1.01);
+}
+
+.progress-bar {
+    position: relative;
+    margin: auto;
+    width: 80%;
+    height: 3em;
+    background-color: rgb(29, 27, 27);
+    box-shadow: 0px 0px 10px 0px rgba(132, 153, 161, 0.281);
+    border-radius: 2em;
+    text-align: center;
+}
+
+.progress-text {
+    font-size: 18px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+.progress-done {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: .3em;
+    left: .5em;
+    bottom: .3em;
+    border-radius: 25em;
+    background-image: linear-gradient(to right, rgb(231, 161, 148), rgb(226, 144, 112) 100px, rgb(245, 123, 86) 200px, rgb(241, 78, 50) 400px, rgb(211, 0, 0));
+    width: calc(var(--width, 0) * 1.52%);
+    min-width: 2.5rem;
+    max-width: calc(100% - .6em);
+    transition: 1s;
 }
 
 .create-habit-form {
@@ -284,3 +374,4 @@ a.login:hover {
 .form-btn-cancel:hover {
     background-color:  rgb(167, 34, 34);
 }
+

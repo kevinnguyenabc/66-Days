@@ -18,7 +18,7 @@ for (let i = 0; i < checkins.length-1; i++){
     }
     num++;
 }
-data.push(num);
+data.push(num++);
 
 let labels = [];
 for (var i = 0; i < data.length; i++){
@@ -26,6 +26,8 @@ for (var i = 0; i < data.length; i++){
     let x = new Date(date);
     labels.push(x.getMonth()+1 + "/" + x.getDate())
 }
+let x = new Date(date.setDate(date.getDate() + 1));
+let nextDate = x.getMonth()+1 + "/" + x.getDate();
 
 
 console.log(data)
@@ -36,23 +38,49 @@ var myChart = new Chart(ctx, {
     data: {
         labels: labels,
         datasets: [{
-            label: "easdf",
+            label: "Check In Progression",
             backgroundColor: 'rgb(125, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             data: data,
             lineTension: 0,
     }]},
     options: {
+        legend: {
+            onClick: (e) => e.stopPropagation(),
+            labels: {
+               fontColor: 'white',
+               fontSize: 18,
+            }
+         },
         scales: {
             yAxes: [{
+                drawTicks: false,
                 ticks: {
+                    fontColor: "rgb(198, 209, 248)",
                     suggestedMax: 66,
                     stepSize: 2,
-                    beginAtZero: true
+                    beginAtZero: true,
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    fontColor: "rgb(198, 209, 248)",
                 }
             }]
         }
     }
 });
 
+const progressBar = document.getElementsByClassName('progress-bar')[0];
+const style = getComputedStyle(progressBar);
+const width = parseFloat(style.getPropertyValue('--width'))
+progressBar.style.setProperty('--width', checkins.length);
 
+function addData() {
+    myChart.data.labels.push(nextDate);
+    myChart.data.datasets.forEach((dataset) => {
+        dataset.data.push(num);
+    });
+    myChart.update();
+    progressBar.style.setProperty('--width', width + 1);
+}
