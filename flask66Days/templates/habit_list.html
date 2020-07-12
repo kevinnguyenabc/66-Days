@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div>
+    <div style="display: inline;">
         <h1 class="page-title">Your Habits</h1>
+
     </div>
 
 
@@ -33,7 +34,7 @@
 
     {% endif %}
 
-
+    <br><br><br><br>
     <script src="{{ url_for('static', filename='checkin.js') }}"></script>
 
 {% endblock content %}

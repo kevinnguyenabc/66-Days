@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
+:root {
+    --primary-button: rgb(70, 103, 211);
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -31,6 +35,7 @@ a {
     text-decoration: none;
     color: rgb(233, 233, 233);
     transition: .3s ease; 
+    user-select: none;
 }
 
 
@@ -40,7 +45,7 @@ a {
 
 
 a.navlinks:hover, h2 a:hover {
-    color: rgb(70, 103, 211);
+    color: var(--primary-button);
 }
 
 
@@ -58,9 +63,12 @@ a.navlinks:hover, h2 a:hover {
 .homepage {
     text-align: center;
 }
+
 .homepage h1 {
+    animation: 1s slideInFromLeft;
+    font-family: "Lucida Sans Unicode";
     margin: 20px;
-    font-size: 4em;
+    font-size: 5em;
     color:rgb(123, 199, 123);
 }
 
@@ -82,10 +90,20 @@ a.navlinks:hover, h2 a:hover {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
     grid-auto-rows: 280px;
-    grid-gap: 5% 2%;
+    grid-gap: 4% 2%;
     flex-wrap: wrap;
     justify-content: flex-start;
 }
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: scale(0.94);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+  
 
 li.habit {
     padding: 5px 25px 5px 25px;
@@ -106,6 +124,9 @@ li.habit:hover {
 
 .text-muted {
     color: rgb(189, 189, 189);
+}
+a.text-muted {
+    float: right;
 }
 
 .habit-content {
@@ -182,6 +203,7 @@ a.logout:hover {
 }
 
 a.login {
+    padding: 10px;
     color: rgb(223, 240, 236);
 }
 
@@ -268,8 +290,8 @@ a.login:hover {
     margin: auto;
     width: 80%;
     height: 3em;
-    background-color: rgb(29, 27, 27);
-    box-shadow: 0px 0px 10px 0px rgba(132, 153, 161, 0.281);
+    background-color: rgba(25, 26, 32, 0.555);
+    box-shadow: 0px 0px 10px 0px rgba(93, 107, 112, 0.281);
     border-radius: 2em;
     text-align: center;
 }
@@ -286,9 +308,9 @@ a.login:hover {
     display: flex;
     align-items: center;
     position: absolute;
-    top: .3em;
+    top: .4em;
     left: .5em;
-    bottom: .3em;
+    bottom: .4em;
     border-radius: 25em;
     background-image: linear-gradient(to right, rgb(231, 161, 148), rgb(226, 144, 112) 100px, rgb(245, 123, 86) 200px, rgb(241, 78, 50) 400px, rgb(211, 0, 0));
     width: calc(var(--width, 0) * 1.52%);
@@ -299,6 +321,7 @@ a.login:hover {
 
 .create-habit-form {
     width: 40%;
+    height: auto;
     background-color: rgb(71, 76, 87);
     border-radius: 15px;
     top: 50%;
@@ -309,6 +332,7 @@ a.login:hover {
     padding: 1%;
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.301);
 }
+
 
 .form-title {
     text-align: center; 
@@ -375,3 +399,86 @@ a.login:hover {
     background-color:  rgb(167, 34, 34);
 }
 
+.about-info {
+    display: none;
+}
+
+.about-info p {
+    background-color: rgba(197, 201, 255, 0.089);
+    display: inline-block;
+    color: red;
+    margin: 0 50px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.arrow {
+    margin-left: 5px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 5px;
+    transition: .4s;
+    align-content: center;
+}
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+} 
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    margin-bottom: 3px;
+}
+
+.navlinks:hover .arrow {
+    border-color: var(--primary-button);
+}
+
+
+
+/* Popup container */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+  
+  /* The actual popup (appears on top) */
+.popuptext {
+    overflow-wrap: break-word;
+    visibility: hidden;
+    width: 500%;
+    background-color: rgba(80, 80, 80, 0.37);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    left: 135%;
+    bottom: 0;
+}
+  
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    right: 100%;
+    bottom: 5%;
+    border-color: transparent #555  transparent transparent;
+}
+  
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+    visibility: visible;
+    animation: fadeIn 1s
+}
+
+  
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}

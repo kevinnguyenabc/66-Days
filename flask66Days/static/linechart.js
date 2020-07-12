@@ -7,12 +7,17 @@ console.log(checkins);
 
 let data = []
 let num = 1;
+if (checkins[0] != 0){
+    for (let i = 0; i < checkins[0]; i++){
+        data.push(0);
+    }
+}
+
 for (let i = 0; i < checkins.length-1; i++){
     let x = parseInt(checkins[i])+1;
     data.push(num);
     let next = parseInt(checkins[i+1])+1
     while (x+1 < next){
-        console.log(x, next, "true")
         data.push(num);
         x++;
     }
@@ -20,8 +25,8 @@ for (let i = 0; i < checkins.length-1; i++){
 }
 data.push(num++);
 
-let labels = [];
-for (var i = 0; i < data.length; i++){
+let labels = [date.getMonth()+1 + "/" + date.getDate()];
+for (var i = 1; i < data.length; i++){
     date.setDate(date.getDate() + 1)
     let x = new Date(date);
     labels.push(x.getMonth()+1 + "/" + x.getDate())
@@ -73,7 +78,7 @@ var myChart = new Chart(ctx, {
 
 const progressBar = document.getElementsByClassName('progress-bar')[0];
 const style = getComputedStyle(progressBar);
-const width = parseFloat(style.getPropertyValue('--width'))
+var width = parseFloat(style.getPropertyValue('--width'))
 progressBar.style.setProperty('--width', checkins.length);
 
 function addData() {
@@ -82,5 +87,6 @@ function addData() {
         dataset.data.push(num);
     });
     myChart.update();
+    let width = parseFloat(style.getPropertyValue('--width'))
     progressBar.style.setProperty('--width', width + 1);
 }

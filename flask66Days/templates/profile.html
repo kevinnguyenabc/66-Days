@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    profile
+<br>
+    bar chart of habit completions
+    <br>
+    counter of how many habits completed
+    <br>
+    Signed in as: {{user}}
+
+    {{ habits }}
+
+    {% set habit_info = dict() %}
+    {% for habit in habits %}
+        {% set x = habit_info.__setitem__(habit.title, habit.checkins|length) %}
+    {% endfor %}
+
+    {{ habit_info | safe }}
+
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+    var habits = JSON.parse('{{habit_info | tojson | safe }}');
+    </script>
+    <script src="{{ url_for('static', filename='barchart.js') }}"></script>
+{% endblock content %}

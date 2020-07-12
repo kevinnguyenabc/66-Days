@@ -151,3 +151,8 @@ def check_inTEST(habit_id):
         print("check in not available")
     return str(habit_id)
     
+
+@app.route('/profile')
+def profile():
+    habits = User.query.filter_by(id=current_user.id).first().habits
+    return render_template('profile.html', habits=habits, user=current_user.username)
