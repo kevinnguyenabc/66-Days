@@ -65,7 +65,7 @@ def single_habit(habit_id):
     print(habit.date_created)
     print(habit.checkins, file=sys.stderr)
     if habit.author != current_user:
-        print("not author")
+        flash("not author")
         return redirect(url_for('habit_list'))
     return render_template('single_habit.html', habit=habit, now=datetime.now())
 
@@ -87,7 +87,7 @@ def update_habit(habit_id):
     elif request.method == 'GET':
         form.title.data = habit.title
         form.content.data = habit.content
-    return render_template('create_habit.html', form = form, title='Update Habit', head='Update Page')
+    return render_template('create_habit.html', form = form, title='Update Habit', head='Update Page', id=habit.id)
 
 
 @app.route('/single_habit/<int:habit_id>/delete', methods=['POST'])
@@ -155,4 +155,4 @@ def check_inTEST(habit_id):
 @app.route('/profile')
 def profile():
     habits = User.query.filter_by(id=current_user.id).first().habits
-    return render_template('profile.html', habits=habits, user=current_user.username)
+    return render_template('profile.html', habits=habits, user=current_user.username, now=datetime.now())

@@ -35,23 +35,28 @@
 
     </header>
     
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-                {{ message }}
-            </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
 
     {% block content %}
     {% endblock %}
 
 
-    <!-- Optional JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='interactive.js') }}"></script>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% set message = messages[0][1] %}
+            <div id="messageModal" class="modal">
+                <div class="message">
+                    <span class="close">&times;</span>
+                    <p>
+                        {{ message }}
+                    </p>
+                </div>
+            </div>
+            <script>displayMessageModal()</script>
+        {% endif %}
+    {% endwith %}
+
+
 
 </body>
 </html>

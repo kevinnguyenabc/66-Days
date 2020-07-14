@@ -4,7 +4,7 @@
 {% block content %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <h2 style="text-align: center;">{{ habit.title }}</h2>
-    <div class="single-habit-page">
+    <div class="split-page">
         <div id="habit-{{habit.id}}" class="single-habit">
             <div class="article-metadata">
                 <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
@@ -22,12 +22,10 @@
                     </div>
                     <div style="display: inline-flex">
                         <a class="update" href="{{ url_for('update_habit', habit_id=habit.id) }}">Update</a>
-                        <form id="deleteForm" onclick='deleteHabit( "{{habit.id}}" )' method="POST">
-                            <input type="submit" class="delete" value="Delete">
-                        </form>
+                        <button class="delete" onclick='displayMessageModal("delete")'>Delete</button>
+
                     </div>
                 </div>
-
             {% endif %}
         </div>
         <div class="habit-info">
@@ -56,7 +54,16 @@
         </div>
 
     </div>
-    
+
+    <div id="deleteModal" class="modal">
+        <div style="white-space: pre-line;" class="message delete-message">
+            <span class="close">&times;</span>
+            Are you sure you want to delete?
+            Deleteing will permanently remove this habit and all of its progress.
+            <button class="delete" onclick='deleteHabit( "{{habit.id}}" )'>Delete</button>
+        </div>
+    </div>
+
     {% set checkins = [] %}
     {% for checkin in habit.checkins %}
         {% if checkins.append(checkin.day) %}{% endif %}

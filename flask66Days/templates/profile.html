@@ -1,26 +1,33 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    profile
-<br>
-    bar chart of habit completions
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <h2 class="page-title">Welcome, {{ user }}</h2>
     <br>
-    counter of how many habits completed
-    <br>
-    Signed in as: {{user}}
-
-    {{ habits }}
 
     {% set habit_info = dict() %}
     {% for habit in habits %}
         {% set x = habit_info.__setitem__(habit.title, habit.checkins|length) %}
     {% endfor %}
 
-    {{ habit_info | safe }}
-
-    <div class="chart-container">
-        <canvas id="myChart"></canvas>
+    <div class="split-page">
+        <div style="height: 500px" class="chart-container">
+            <canvas id="myChart"></canvas>
+        </div>
+        <div class="habit-info">
+            {% set count = namespace(value=0) %}
+            {% for habit in habits %}
+                {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
+                    {% set count.value = count.value + 1 %}
+                {% endif %}
+            {% endfor %}
+            <h2>Checked In Today:</h2>
+            <h2 id="checked_in">{{ count.value }} / {{ habits | length }}</h2>
+            <h2>Habits Completed:</h2>
+            <h2 id="num"></h2>
+        </div>
     </div>
+
 
     <script>
     var habits = JSON.parse('{{habit_info | tojson | safe }}');

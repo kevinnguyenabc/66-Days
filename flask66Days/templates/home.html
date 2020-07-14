@@ -5,13 +5,15 @@
 
     <div class="homepage">
         <h1>66 Days</h1>
-
-        Lorem ipsum dolor sit amet.
-        <br>
+        <p>
+            66 Days is a habit tracker that helps form lifelong habits that are meaningful to you! 
+            Psychology research says that on average, it takes roughly 66 days for habits to form and become automatic. Get started to incorporate daily behaviors into your lifestyle!
+        </p>
         <br>
         <a class="navlinks" style="font-size: 18px; display: inline-block; margin-bottom: 5px;" onclick="displayAbout()"> Learn More  <i class="arrow down"></i> </a>
         <div class="about-info">
-            <p style="white-space: pre-line;">asdfasdfsadfsadfds
+            <p style="white-space: pre-line;">
+                asdfasdfsadfsadfds
                 asdfasdfsadfsadfdsasdfa
 
                 asdfasdfsadfsadfds
@@ -24,11 +26,10 @@
             </p>
         </div>
     </div>
-
+    <br><br><br>
 
 
     <script>
         var x = JSON.parse('{{ x | tojson | safe}}');
     </script>
-    <script src="{{ url_for('static', filename='interactive.js') }}"></script>
 {% endblock content %}
