@@ -113,6 +113,15 @@ a.navlinks:hover, h2 a:hover {
         transform: scale(1);
     }
 }
+
+@keyframes pulse {
+    20% {
+        transform: scale(1.10);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
   
 
 li.habit {
@@ -326,8 +335,19 @@ a.login:hover {
     background-image: linear-gradient(to right, rgb(231, 161, 148), rgb(226, 144, 112) 100px, rgb(245, 123, 86) 200px, rgb(241, 78, 50) 400px, rgb(211, 0, 0));
     width: calc(var(--width, 0) * 1.52%);
     min-width: 2.5rem;
-    max-width: calc(100% - .6em);
+    max-width: calc(100% - 1em);
     transition: 1.5s ease-out;
+}
+
+.progress-done-habits {
+    top: .6em;
+    left: .7em;
+    bottom: .6em;   
+    background-image: linear-gradient(to right, rgb(181, 216, 157), rgb(155, 224, 127) 100px, rgb(137, 190, 102) 200px, rgb(93, 153, 53) 400px, rgb(58, 151, 14));
+    width: calc(var(--width, 0) * var(--scale, 0%));
+    min-width: 4rem;
+    max-width: calc(100% - 1.4em);
+    transition: 2.2s ease-out;
 }
 
 .create-habit-form {
@@ -344,10 +364,8 @@ a.login:hover {
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.301);
 }
 
-
 .form-title {
-    text-align: center; 
-    
+    text-align: center;    
 }
 
 .form-description {

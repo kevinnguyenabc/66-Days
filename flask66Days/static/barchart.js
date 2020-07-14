@@ -51,3 +51,17 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+
+
+const progressBar = document.getElementsByClassName('progress-bar')[0];
+const style = getComputedStyle(progressBar);
+progressBar.style.setProperty('--width', v);
+progressBar.style.setProperty('--scale', 100 / s + "%");
+
+if (v === s){
+    setTimeout( function() {
+        progressBar.style.setProperty("animation", "1s pulse");
+    }, 2000);
+
+}

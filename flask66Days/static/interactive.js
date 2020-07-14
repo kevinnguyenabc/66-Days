@@ -34,3 +34,4 @@ function displayMessageModal(type) {
         }
     }
 }
+

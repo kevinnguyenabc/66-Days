@@ -22,7 +22,10 @@
                 {% endif %}
             {% endfor %}
             <h2>Checked In Today:</h2>
-            <h2 id="checked_in">{{ count.value }} / {{ habits | length }}</h2>
+            <div style="margin-top:0; height: 5em;" class="progress-bar">
+                <div class="progress-done progress-done-habits"></div>
+                <div style="font-size: 22px;" class="progress-text">{{ count.value }} / {{ habits | length }}</div>
+            </div>
             <h2>Habits Completed:</h2>
             <h2 id="num"></h2>
         </div>
@@ -30,7 +33,9 @@
 
 
     <script>
-    var habits = JSON.parse('{{habit_info | tojson | safe }}');
+        let v = "{{ count.value }}"
+        let s = "{{ habits|length }}"
+        var habits = JSON.parse('{{habit_info | tojson | safe }}');
     </script>
     <script src="{{ url_for('static', filename='barchart.js') }}"></script>
 {% endblock content %}

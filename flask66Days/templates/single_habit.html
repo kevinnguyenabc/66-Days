@@ -44,8 +44,8 @@
                 {% endfor %}
             {% endif %}
             <h2 style="margin-top: 0; margin-bottom: 8%;" id="streak-counter">{{ counter[0] }} Days</h2>
+            
             <h2 style="margin-bottom: 10px;">Progress:</h2>
-            <!-- <progress max="66" value="{{ habit.checkins|length}}"></progress> -->
             <div style="margin-top:0;"  class="progress-bar">
                 <div class="progress-done"></div>
                 <div class="progress-text">{{ habit.checkins|length}} Days Completed</div>
