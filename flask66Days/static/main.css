@@ -2,6 +2,7 @@
 
 :root {
     --primary-button: rgb(70, 103, 211);
+    --tester: rgb(125, 99, 132);
 }
 
 *, *::before, *::after {
@@ -16,7 +17,6 @@ body {
     color: rgb(235, 235, 235);
     height: auto;
 }
-
 
 header {
     padding: 12px;
@@ -65,21 +65,23 @@ a.navlinks:hover, h2 a:hover {
 }
 
 .homepage h1 {
-    animation: 1s grow;
-    font-family: "Lucida Sans Unicode";
+    animation: 1.5s grow;
+    font-family: Cambria, Georgia, serif;
     margin: 20px;
-    margin-bottom: 0;
-    font-size: 5em;
+    margin-bottom: 1.5%;
+    font-size: 8em;
     color:rgb(123, 199, 123);
 }
 
-.homepage p {
-    margin-top: 0;
-    font-size: 1.2em;
+.homepage .text {
+    font-size: 1.3em;
     width: 70%;
-    margin: auto;
+    margin: 0 auto;
+    padding: 0;
     white-space: pre-line;
+    line-height: 3em;
 }
+
 
 .page-title {
     text-align: center;
@@ -133,6 +135,7 @@ li.habit {
     transition: .5s;
     background: #353844;
     box-shadow: 4px 4px 20px 2px rgba(0, 0, 0, 0.192);
+    animation: .2s fadeIn;
 }
 
 li.habit:hover {
@@ -175,6 +178,10 @@ a.text-muted {
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: rgb(109, 128, 153);
+}
+
+::-webkit-scrollbar-corner {
+    background: none;
 }
 
 /* Handle on hover */
@@ -362,6 +369,7 @@ a.login:hover {
     position: absolute;
     padding: 1%;
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.301);
+    animation: .5s fadeIn;
 }
 
 .form-title {
@@ -430,21 +438,37 @@ a.login:hover {
 
 .about-info {
     display: none;
+    line-height: 1.7em;
 }
 
-.about-info p {
+.about-info .hidden-text {
+    text-align: left;
+    white-space: pre-line;  
+    font-size: 1.1em;
     background-color: rgba(197, 201, 255, 0.089);
     display: inline-block;
-    color: red;
+    color: rgb(221, 221, 221);
     margin: 0 20px;
-    padding: 10px;
+    padding: 25px;
     border-radius: 10px;
     width: 80%;
 }
 
+.about-info b {
+    color: rgb(245, 245, 245);
+    font-size: 1.2em;
+}
+
+.about-info sup {
+    vertical-align: top; 
+    position: relative; 
+    top: -0.5em;
+    font-size: 0.7em;
+}
+
 .arrow {
-    margin-left: 5px;
-    border: solid white;
+    margin-left: 8px;
+    border: solid rgb(130, 130, 255);
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 5px;
@@ -461,11 +485,26 @@ a.login:hover {
     margin-bottom: 3px;
 }
 
-.navlinks:hover .arrow {
-    border-color: var(--primary-button);
+.learn-more {
+    font-size: 18px; 
+    display: inline-block; 
+    margin-top: 2.5%; 
+    margin-bottom: 10px;
+    color: rgb(130, 130, 255);
 }
 
+.learn-more:hover {
+    color: rgb(87, 87, 255);
+    text-decoration: underline;
+}
 
+.learn-more:active {
+    color: rgb(50, 50, 255);
+}
+
+.learn-more:active .arrow {
+    border-color: rgb(50, 50, 255);
+}
 
 /* Popup container */
 .popup {
@@ -480,18 +519,17 @@ a.login:hover {
   
   /* The actual popup (appears on top) */
 .popuptext {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.137);
     overflow-wrap: break-word;
     visibility: hidden;
     width: 500%;
     background-color: rgba(80, 80, 80, 0.37);
     color: #fff;
-    text-align: center;
     border-radius: 6px;
-    padding: 8px 0;
+    padding: 8px 12px;
     position: absolute;
     left: 135%;
     bottom: 0;
-    
 }
   
 /* Popup arrow */
@@ -502,7 +540,7 @@ a.login:hover {
     border-width: 5px;
     border-style: solid;
     right: 100%;
-    bottom: 5%;
+    bottom: 3%;
     border-color: transparent #555  transparent transparent;
 }
   
@@ -512,12 +550,10 @@ a.login:hover {
     animation: fadeIn 1s
 }
 
-  
 @keyframes fadeIn {
-    from {opacity: 0;}
+    from {opacity: .3;}
     to {opacity:1 ;}
 }
-
 
 /* The Modal (background) */
 .modal {

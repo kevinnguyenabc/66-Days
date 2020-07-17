@@ -12,12 +12,14 @@ function displayAbout() {
 function displayMessageModal(type) {
     // Get the modal
     let modal = document.getElementById("messageModal");
+    var span = document.getElementById("close");
     if (type === "delete"){
         modal = document.getElementById("deleteModal");
+        span = document.getElementById("closeButton");
     } 
 
     // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+
 
     // When the user clicks on the button, open the modal
     modal.style.display = "block";

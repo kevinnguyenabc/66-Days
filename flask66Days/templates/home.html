@@ -5,25 +5,26 @@
 
     <div class="homepage">
         <h1>66 Days</h1>
-        <p>
-            66 Days is a habit tracker that helps form lifelong habits that are meaningful to you! 
-            Psychology research says that on average, it takes roughly 66 days for habits to form and become automatic. Get started to incorporate daily behaviors into your lifestyle!
+        <p class="text">"66 Days" is a habit tracker that helps you form lifelong habits that are meaningful to you! 
+            Psychology research says that on average, it takes roughly 66 days for habits to form and become automatic. 
+            "66 Days" allows you to keep track of your habits and check-in daily. 
+            Streaks and progress over time are recorded in order to show how your habits are coming along.
+            <a style="text-decoration: underline; padding: 0;" href=" {{ url_for('create_habit') }}" class="navlinks">Get started</a> to incorporate daily behaviors into your lifestyle!
         </p>
-        <br>
-        <a class="navlinks" style="font-size: 18px; display: inline-block; margin-bottom: 5px;" onclick="displayAbout()"> Learn More  <i class="arrow down"></i> </a>
+        <a class="learn-more" onclick="displayAbout()"> Learn More<i class="arrow down"></i> </a>
         <div class="about-info">
-            <p style="white-space: pre-line;">
-                asdfasdfsadfsadfds
-                asdfasdfsadfsadfdsasdfa
-
-                asdfasdfsadfsadfds
-                asdfasdfsadfsadfdsasdfaa
-                sdfasdf
-                asdfasdfsadfsadfdsasdfaasdfas
-
-                asdfasdfsadfsadfdsasdfa
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel animi commodi molestias, alias quia consequatur, temporibus numquam sit molestiae laudantium incidunt, nulla earum cupiditate tenetur maxime! Saepe reiciendis beatae deserunt nesciunt fuga nobis, esse molestias ipsa fugiat, quam culpa sit enim explicabo maxime labore adipisci dolores consectetur optio, nulla nostrum! Dicta consequatur at ducimus vero quod quidem mollitia voluptatibus, sit modi et pariatur ullam labore doloribus nisi provident atque quisquam explicabo temporibus molestias, itaque impedit laudantium culpa! Reprehenderit iste quo neque delectus pariatur veniam quae libero nostrum expedita quidem, nihil sint inventore praesentium minima. Officiis optio tenetur reprehenderit labore libero.
-            </p>
+            <div class="hidden-text"><b>How does one form a habit?</b>
+                The primary goal of habit formation is to achieve consistent frequency through automaticity, rather than frequency alone.<a href="#note1"><sup>1</sup></a> This is because mere frequency relies on motivation, which comes and goes and wanes very easily. Continuously performing an action daily through deliberation and intentional effort has been shown to be much less successful in formation of habits and, consequently, in producing lasting changes. The way to effortlessly form habits is to produce automaticity, which is the inherent definition of a habit. The idea is to place the intended behavior within a particular context that is encountered daily to reinforce an association that becomes second-nature.<a href="#note2"><sup>2</sup></a> For example, if drinking more water is the intended habit, it is more effective to say “drink water as you eat meals” rather than saying “drink more water” alone. As you continue to reinforce the habit, it increasingly becomes automatic that you perform the action (drinking water) in the particular context (when eating meals). 
+                
+                <b>Why 66 days?</b>
+                The actual number of days to reach automaticity varies dramatically, with a study by Lally, et. al<a href="#note1"><sup>3</sup></a> finding that it can range from 18 to 254 days. However, the study concluded that on average, automaticity plateaus around 66 days. More importantly, setting realistic expectations for how long habits take to form can lead to better results for those trying to improve their lifestyle. Many people have heard that it only takes 21 days in order to form a habit, which appears to be an idea taken out of context. This belief is problematic because it can lead many to expect faster results and give up when it takes longer than they realize. Another idea to keep in mind is that occasionally missing a day is not extremely detrimental, and instead, one should focus their goals on achieveing automaticity rather than the number of days they completed their task.
+                
+                 <b>Key Takeaways</b><ul style="margin:0;"><li>Automaticity over deliberation; make the process as effortless as possible. </li><li>Reframe your habit around cues, rather than a standalone idea.</li><li>Set up your environment such that the contextual cues for your habit appear often enough (or the opposite if you are trying to break a habit!).</li></ul>
+                <small><b class="text-muted">References</b>
+                    <sup id="note1">1</sup> Gardner B., Lally P., Wardle J. Making health habitual: the psychology of ‘habit-formation’ and general practice. Br J Gen Pract. 2012;62:664–666.
+                    <sup id="note2">2</sup> Gardner, B.,'Habit as automaticity, not frequency', European Health Psychologist, 2012, vol. 14, no. 2, pp. 32-36.
+                    <sup id="note3">3</sup> Lally P, van Jaarsveld CHM, Potts HWW, Wardle J. How are habits formed: modelling habit formation in the real world. Euro J Soc Psychol. 2010;40:998–1009.</small>
+                </div>
         </div>
     </div>
     <br><br><br>

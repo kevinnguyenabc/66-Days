@@ -96,10 +96,10 @@ def delete_habit(habit_id):
     habit = Habit.query.get_or_404(habit_id)
     checkins = CheckIn.query.filter_by(habit_id=habit_id).all()
     print(checkins)
-    for checkin in checkins:
-        db.session.delete(checkin)
     if habit.author != current_user:
         abort(403)
+    for checkin in checkins:
+        db.session.delete(checkin)
     habit.checkins = []
     db.session.delete(habit)
     db.session.commit()
@@ -156,3 +156,12 @@ def check_inTEST(habit_id):
 def profile():
     habits = User.query.filter_by(id=current_user.id).first().habits
     return render_template('profile.html', habits=habits, user=current_user.username, now=datetime.now())
+
+@app.route('/testnum15')
+def testnum15():
+    habit = Habit.query.get(15)
+    for i in range(67,77):
+        check_in = CheckIn(day=i, cihabit=habit)
+        db.session.add(check_in)
+    db.session.commit()
+    return "success"

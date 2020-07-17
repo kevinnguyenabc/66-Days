@@ -1,19 +1,20 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div style="display: inline;">
+    <div class="header">
         <h1 class="page-title">Your Habits</h1>
-
     </div>
 
 
     {% if habits|length == 0 %}
         <div class="homepage">
-            <p>You currently have no habits! </p>
+            <p>You currently have no habits! 
+                <a style="text-decoration: underline; padding: 0;" href=" {{ url_for('create_habit') }}" class="navlinks">Create</a> one now!
+            </p>
         </div>  
     {% else %}
     <div class="habits">
-        <ul class="habits-list" id="sortable">
+        <ol class="habits-list" id="sortable">
         {% for habit in habits %}
             <li class="habit" id="habit-{{habit.id}}">
                     <div>
@@ -29,12 +30,14 @@
                     </div>
             </li>
         {% endfor %}
-    </ul>
-</div>
+        </ol>
+    </div>
 
+    <div style="margin: 200px auto 100px auto; text-align: center; font-size: 1.3em;">
+        <a href="" class="navlinks">Archived Habits</a>
+    </div>
     {% endif %}
 
-    <br><br><br><br><br><br><br>
     <script src="{{ url_for('static', filename='checkin.js') }}"></script>
 
 {% endblock content %}

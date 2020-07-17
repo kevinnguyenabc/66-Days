@@ -82,11 +82,12 @@ var width = parseFloat(style.getPropertyValue('--width'))
 progressBar.style.setProperty('--width', checkins.length);
 
 function addData() {
-    myChart.data.labels.push(nextDate);
-    myChart.data.datasets.forEach((dataset) => {
-        dataset.data.push(num);
-    });
-    myChart.update();
+    // Doesn't work when you missed days, as it adds one on as if theres a streak
+    // myChart.data.labels.push(nextDate);
+    // myChart.data.datasets.forEach((dataset) => {
+    //     dataset.data.push(num);
+    // });
+    // myChart.update();
     let width = parseFloat(style.getPropertyValue('--width'))
     progressBar.style.setProperty('--width', width + 1);
 }

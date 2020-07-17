@@ -35,7 +35,6 @@
 
     </header>
     
-
     {% block content %}
     {% endblock %}
 
@@ -46,7 +45,7 @@
             {% set message = messages[0][1] %}
             <div id="messageModal" class="modal">
                 <div class="message">
-                    <span class="close">&times;</span>
+                    <span id="close" class="close">&times;</span>
                     <p>
                         {{ message }}
                     </p>

@@ -1,13 +1,20 @@
 console.log(habits);
 
 let data = [];
-let labels = []
+let labels = [];
+let bgcolors = [];
+let bdcolors = [];
 let num = 0;
 for (const [key, value] of Object.entries(habits)) {
     labels.push(key);
     data.push(value);
     if (value >= 66) {
         num++;
+        bgcolors.push('rgba(157, 197, 124, .6)')
+        bdcolors.push('rgb(144, 206, 93, .9)')
+    } else {
+        bgcolors.push('rgb(125, 99, 132)');
+        bdcolors.push('rgb(255, 99, 132)')
     }
 }
 $("#num").text(num);
@@ -19,8 +26,8 @@ var myChart = new Chart(ctx, {
         labels: labels,
         datasets: [{
             label: "Your Habits",
-            backgroundColor: 'rgb(125, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: bgcolors,
+            borderColor: bdcolors,
             borderWidth: 1.3,
             barPercentage: .7,
             data: data,
@@ -30,8 +37,9 @@ var myChart = new Chart(ctx, {
         legend: {
             onClick: (e) => e.stopPropagation(),
             labels: {
-               fontColor: 'white',
-               fontSize: 18,
+                boxWidth: 0,
+                fontColor: 'white',
+                fontSize: 18,
             }
          },
         scales: {
@@ -41,6 +49,7 @@ var myChart = new Chart(ctx, {
                     fontColor: "rgb(198, 209, 248)",
                     stepSize: 2,
                     beginAtZero: true,
+                    suggestedMax: 10,
                 }
             }],
             xAxes: [{

@@ -8,6 +8,9 @@
         <div id="habit-{{habit.id}}" class="single-habit">
             <div class="article-metadata">
                 <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
+                {% if habit.checkins|length >= 66 %}
+                    <small style="float: right;"><a href="#">Archive as Completed</a></small>
+                {% endif %}
             </div>
             <h3 style="margin-top: 1%;">Habit Content:</h3>
             <p class="habit-content">{{ habit.content }}</p>
@@ -57,9 +60,11 @@
 
     <div id="deleteModal" class="modal">
         <div style="white-space: pre-line;" class="message delete-message">
-            <span class="close">&times;</span>
-            Are you sure you want to delete?
-            Deleteing will permanently remove this habit and all of its progress.
+            <span id="closeButton" class="close">&times;</span>
+            <p id="modal-text" style="margin: 0;">
+                Are you sure you want to delete?
+                Deleteing will permanently remove this habit and all of its progress.
+            </p>
             <button class="delete" onclick='deleteHabit( "{{habit.id}}" )'>Delete</button>
         </div>
     </div>
