@@ -4,12 +4,10 @@ let data = [];
 let labels = [];
 let bgcolors = [];
 let bdcolors = [];
-let num = 0;
 for (const [key, value] of Object.entries(habits)) {
     labels.push(key);
     data.push(value);
     if (value >= 66) {
-        num++;
         bgcolors.push('rgba(157, 197, 124, .6)')
         bdcolors.push('rgb(144, 206, 93, .9)')
     } else {
@@ -17,7 +15,6 @@ for (const [key, value] of Object.entries(habits)) {
         bdcolors.push('rgb(255, 99, 132)')
     }
 }
-$("#num").text(num);
 
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {

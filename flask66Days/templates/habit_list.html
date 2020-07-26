@@ -2,40 +2,75 @@
 
 {% block content %}
     <div class="header">
-        <h1 class="page-title">Your Habits</h1>
+        {% if not archive %}
+            <h1 class="page-title">Your Habits</h1>
+        {% else %}
+            <h1 class="page-title">Archived Habits</h1>
+        {% endif %}
     </div>
 
 
     {% if habits|length == 0 %}
         <div class="homepage">
+            {% if not archive %}
             <p>You currently have no habits! 
                 <a style="text-decoration: underline; padding: 0;" href=" {{ url_for('create_habit') }}" class="navlinks">Create</a> one now!
             </p>
+            {% else %}
+            <p>You have no archived habits.</p>
+            <a href=" {{ url_for('habit_list') }} " class="navlinks">Back to Habits List</a>
+            {% endif %}
+
         </div>  
     {% else %}
     <div class="habits">
         <ol class="habits-list" id="sortable">
         {% for habit in habits %}
-            <li class="habit" id="habit-{{habit.id}}">
+            {% if not archive %}
+                <li class="habit" id="habit-{{habit.id}}">
+                        <div>
+                            <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
+                            <h2 class="habit-title"><a href="{{ url_for('single_habit', habit_id=habit.id) }}">{{ habit.title }}</a></h2>
+                            <div style="--width: {{ habit.checkins|length }}"  class="progress-bar progress-bar-small">
+                                <div class="progress-done progress-done-small"></div>
+                            </div>
+                            <p class="habit-content">{{ habit.content }}</p>
+                            
+                            {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
+                                <a id="{{habit.id}}" class="checked_in" >Checked In! &#10003;</a>
+                            {% else %}
+                                <a id="{{habit.id}}" class="check_in" onclick='checkin("{{habit.id}}")'>Check In &#10003;</a>
+                            {% endif %}
+                        </div>
+                </li>
+            {% else %}
+                <li class="habit" id="habit-{{habit.id}}">
                     <div>
                         <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
                         <h2 class="habit-title"><a href="{{ url_for('single_habit', habit_id=habit.id) }}">{{ habit.title }}</a></h2>
+                        <div style="--width: {{ habit.checkins|length }}"  class="progress-bar progress-bar-small">
+                            <div class="progress-done progress-done-small"></div>
+                        </div>
                         <p class="habit-content">{{ habit.content }}</p>
                         
-                        {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
-                            <a id="{{habit.id}}" class="checked_in" >Checked In! &#10003;</a>
-                        {% else %}
-                            <a id="{{habit.id}}" class="check_in" onclick='checkin("{{habit.id}}")'>Check In &#10003;</a>
-                        {% endif %}
+                        <p class="text-muted" style="font-size: 1.3em; margin-top: 7%;">{{ habit.checkins|length }} Days Completed!</p> 
                     </div>
-            </li>
+                </li>
+            {% endif %}
         {% endfor %}
         </ol>
     </div>
 
-    <div style="margin: 200px auto 100px auto; text-align: center; font-size: 1.3em;">
-        <a href="" class="navlinks">Archived Habits</a>
-    </div>
+    {% if not archive %}
+        <div class="bottom-link">
+            <a href=" {{ url_for('archived') }} " class="navlinks">Archived Habits</a>
+        </div>
+    {% else %}
+        <div class="bottom-link">
+            <a href=" {{ url_for('habit_list') }} " class="navlinks">Back to Habits List</a>
+        </div>
+    {% endif %}
+
     {% endif %}
 
     <script src="{{ url_for('static', filename='checkin.js') }}"></script>

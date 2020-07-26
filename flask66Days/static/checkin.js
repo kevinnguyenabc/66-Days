@@ -44,5 +44,13 @@ function deleteHabit(id){
     });
 }
 
-
-
+function archiveHabit(id){
+    jQuery.ajax({
+        dataType: "text",  // Setting return data type
+        method: "POST",// Setting request method
+        url: "/single_habit/" + id + "/archive", // Setting request url, mapped to routes.py
+        success: function(url){
+            window.location.href = url;
+        } // Setting callback function to handle data returned successfully by the SingleStarServlet
+    });
+}

@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 
+
 {% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <h1 class="page-title">Welcome, {{ user }}</h1>
     <br>
 
@@ -27,10 +28,12 @@
                 <div style="font-size: 22px;" class="progress-text">{{ count.value }} / {{ habits | length }}</div>
             </div>
             <h2>Total Habits Completed:</h2>
-            <h2 id="num"></h2>
+            <h2 id="num">{{completed}}</h2>
         </div>
     </div>
-
+    <br><br><br><br>
+    <hr>
+    <h2 class="page-title">Inbox</h2>
 
     <script>
         let v = "{{ count.value }}"

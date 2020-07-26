@@ -9,17 +9,19 @@ function displayAbout() {
     $(".popuptext").toggleClass("show");
 }
 
-function displayMessageModal(type) {
+function displayMessageModal(type, id) {
     // Get the modal
-    let modal = document.getElementById("messageModal");
-    var span = document.getElementById("close");
-    if (type === "delete"){
-        modal = document.getElementById("deleteModal");
-        span = document.getElementById("closeButton");
-    } 
-
-    // Get the <span> element that closes the modal
-
+    let modal = document.getElementById("deleteModal");
+    let span = document.getElementById("closeButton");
+    if (type === "message"){
+        modal = document.getElementById("messageModal");
+        span = document.getElementById("close");
+    } else if (type === "archive"){
+        document.getElementById("modal-text").innerHTML = "Archiving will move this habit to the archived habits page, and will deactivate the habit. Archiving can be undone.";
+        let btn = document.getElementById("confirm");
+        btn.innerHTML = "Archive";
+        btn.onclick = function() { archiveHabit(id) }
+    }
 
     // When the user clicks on the button, open the modal
     modal.style.display = "block";

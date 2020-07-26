@@ -3,28 +3,33 @@
 
 {% block content %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <h2 style="text-align: center;">{{ habit.title }}</h2>
+    <h2 class="page-title">{{ habit.title }}</h2>
     <div class="split-page">
         <div id="habit-{{habit.id}}" class="single-habit">
             <div class="article-metadata">
                 <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
-                {% if habit.checkins|length >= 66 %}
-                    <small style="float: right;"><a href="#">Archive as Completed</a></small>
+                {% if habit.checkins|length >= 66 and habit.status == "IP" %}
+                    <small style="float: right;"><a href="#" onclick="displayMessageModal('archive', '{{ habit.id }}')" >Archive as Completed</a></small>
+                {% elif habit.checkins|length >= 66 and habit.status == "A"%}
+                    <small style="float: right;"><a href="{{ url_for('unarchive_habit', habit_id=habit.id) }}">Continue Habit</a></small>
                 {% endif %}
             </div>
             <h3 style="margin-top: 1%;">Habit Content:</h3>
             <p class="habit-content">{{ habit.content }}</p>
             {% if habit.author == current_user %}
                 <div style="display: grid; grid-template-columns: 4fr 1fr;">
-                    <div>
-                        {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
-                            <a id="{{habit.id}}" class="checked_in" >Checked In! &#10003;</a>
-                        {% else %}
-                            <a id="{{habit.id}}" class="check_in" onclick='checkin("{{habit.id}}"); addData();'>Check In &#10003;</a>
+                        {% if habit.status == "IP" %}
+                            <div>
+                                {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
+                                    <a id="{{habit.id}}" class="checked_in" >Checked In! &#10003;</a>
+                                {% else %}
+                                    <a id="{{habit.id}}" class="check_in" onclick='checkin("{{habit.id}}"); addData();'>Check In &#10003;</a>
+                                {% endif %}
+                            </div>
                         {% endif %}
-                    </div>
-                    <div style="display: inline-flex">
-                        <a class="update" href="{{ url_for('update_habit', habit_id=habit.id) }}">Update</a>
+
+                    <div style="display: inline-flex; ">
+                        <button class="update"><a href="{{ url_for('update_habit', habit_id=habit.id) }}">Update</a></button>
                         <button class="delete" onclick='displayMessageModal("delete")'>Delete</button>
 
                     </div>
@@ -65,7 +70,7 @@
                 Are you sure you want to delete?
                 Deleteing will permanently remove this habit and all of its progress.
             </p>
-            <button class="delete" onclick='deleteHabit( "{{habit.id}}" )'>Delete</button>
+            <button id="confirm" class="delete" onclick='deleteHabit( "{{habit.id}}" )'>Delete</button>
         </div>
     </div>
 
@@ -79,6 +84,7 @@
     </div>
 
     <br><br>
+
     <script>
         let date_created = "{{habit.date_created}}"
         let checkins = "{{checkins}}"
