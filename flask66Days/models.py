@@ -11,7 +11,8 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     habits = db.relationship('Habit', backref='author', lazy=True)
-    #messages = db.relationship('Message', backref='user', lazy=True)
+    messages = db.relationship('Message', primaryjoin="User.id==Message.toUser", backref="to")
+    sent_messages = db.relationship('Message', primaryjoin="User.id==Message.fromUser", backref="from")
 
     def __repr__(self):
         return f"User('{self.username}')"
@@ -44,3 +45,13 @@ class Link(db.Model):
 
     def __repr__(self):
         return f"Link('{self.habit1}', '{self.habit2}')"
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    fromUser = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    toUser = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    content = db.Column(db.Text)
+    messageType = db.Column(db.String(20), default="LR")
+
+    def __repr__(self):
+        return f"Message({self.fromUser}, {self.toUser})"

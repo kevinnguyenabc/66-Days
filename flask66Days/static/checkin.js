@@ -21,6 +21,18 @@ function handleDeleteHabit(url){
     console.log(url)
 }
 
+function handleLinkRequest(data){
+    console.log(data);
+    data = JSON.parse(data);
+    if (data["status"] === "success"){
+        document.getElementById("modal-text").innerHTML = "\nA link request was sent to " + data.username + "!";
+        document.getElementById("link-username").style.display = "none";
+        // document.getElementById("confirm").style.display = "none";
+        $("#confirm").hide();
+    }
+}
+
+
 function checkin(id){
     jQuery.ajax({
         dataType: "json",  // Setting return data type
@@ -44,6 +56,7 @@ function deleteHabit(id){
     });
 }
 
+
 function archiveHabit(id){
     jQuery.ajax({
         dataType: "text",  // Setting return data type
@@ -53,4 +66,24 @@ function archiveHabit(id){
             window.location.href = url;
         } // Setting callback function to handle data returned successfully by the SingleStarServlet
     });
+}
+
+
+function linkRequest(id){
+    jQuery.ajax({
+        contentType: 'application/json',
+        method: "POST",
+        url: "/link_request",
+        data: JSON.stringify({"id": id, "username": $("#username-input").val()})
+    }).done(function(data) {handleLinkRequest(data); });
+}
+
+
+function linkHabits(habit1, habit2, messageId){
+    jQuery.ajax({
+        contentType: "application/json",
+        method: "POST",
+        url: "/link_habits",
+        data: JSON.stringify({"habit1": habit1, "habit2": habit2, "messageId": messageId})
+    }).done(function(data) { console.log(data) } );
 }

@@ -30,6 +30,13 @@ header div {
     padding: 7px 0px;
 }
 
+button {
+    color: rgb(233, 233, 233);
+    background:none;
+    border: none;
+    cursor: pointer;
+}
+
 
 a {
     text-decoration: none;
@@ -37,12 +44,19 @@ a {
     transition: .3s ease; 
 }
 
+button.navlinks {
+    background: none!important;
+    border: none;
+    cursor: pointer;
+    transition: .3s ease; 
+    font-size: 1.2em;
+}
+
 .navlinks {
     padding: 10px;
 }
 
-
-a.navlinks:hover, h2 a:hover {
+button.navlinks:hover, a.navlinks:hover, h2 a:hover {
     color: var(--primary-button);
 }
 
@@ -262,7 +276,6 @@ a.login:hover {
 }
 
 .delete {   
-    float: right;
     margin-left: 20px;
     color: white;
     font-size: 15px;
@@ -607,7 +620,6 @@ a.login:hover {
 }
   
 .delete-message {
-    padding: 0px 20px 25px 20px;
     background-color: #d4c0c1;
 }
 
@@ -625,8 +637,51 @@ a.login:hover {
     cursor: pointer;
 }
 
+.modal-text {
+    margin: 10px 0px 15px 0px;
+    white-space: pre-line;
+}
+
 .bottom-link {
     margin: 200px auto 100px auto; 
     text-align: center; 
     font-size: 1.3em;
+}
+
+.link-form-input {
+    width: 50%;
+    font-size: 15px;
+    margin: 5px 0px 15px 0px;
+    padding: 0px 9px;
+    color: black;
+    background-color: rgb(233, 236, 243);
+    border: 1.5px gray solid;
+    border-radius: 12px;
+    line-height: 2.5em;
+}
+
+.link-form-input:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px 0px rgba(44, 67, 128, 0.952);
+} 
+
+table {
+    border-collapse: collapse;
+    margin: auto;
+    width: 90%;
+    margin-bottom: 50px;
+}
+
+td, th {
+    background-color: rgba(172, 183, 209, 0.301);
+    text-align: left;
+    padding: 8px;
+}
+
+tr {
+    border: 1px solid #d1e1e8;
+}
+
+tr:hover {
+    background-color: rgb(33, 34, 36);
 }

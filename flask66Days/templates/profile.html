@@ -34,11 +34,44 @@
     <br><br><br><br>
     <hr>
     <h2 class="page-title">Inbox</h2>
+    <table>
+        <tbody>
+            {% for message in inbox %}
+            <tr onclick="openMessage('{{ message.id }}', '{{ message.messageType }}')">
+                <td>{{ message.from.username }}</td>
+                {% if message.messageType.startswith("LR") %}
+                <td>{{ message.content }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <div id="inboxMessageModal" class="modal">
+        <div class="message">
+            <span id="closeButton2" class="close">&times;</span>
+            <p id="modal-text" class="modal-text">
+            </p>
+            <form style="display: none;" action="" id="link-username">
+                <input id="username-input" class="link-form-input" placeholder="Username" type="text">
+            </form>
+            <select id="habit-chosen">
+                {% for habit in habits %}
+                <option value="{{habit.id}}">{{habit.title}}</option>
+                {% endfor %}
+            </select>
+            <button id="confirm" class="update" style="padding: 8px 16px;">Link</button>
+            <button id="reject" class="delete">Reject</button>
+        </div>
+    </div>
+
 
     <script>
         let v = "{{ count.value }}"
         let s = "{{ habits|length }}"
         var habits = JSON.parse('{{habit_info | tojson | safe }}');
     </script>
+    <script src="{{ url_for('static', filename='checkin.js') }}"></script>
     <script src="{{ url_for('static', filename='barchart.js') }}"></script>
 {% endblock content %}

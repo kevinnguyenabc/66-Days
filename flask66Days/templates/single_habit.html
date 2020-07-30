@@ -9,7 +9,7 @@
             <div class="article-metadata">
                 <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
                 {% if habit.checkins|length >= 66 and habit.status == "IP" %}
-                    <small style="float: right;"><a href="#" onclick="displayMessageModal('archive', '{{ habit.id }}')" >Archive as Completed</a></small>
+                    <small style="float: right;"><button onclick="displayMessageModal('archive', '{{ habit.id }}')" >Archive as Completed</button></small>
                 {% elif habit.checkins|length >= 66 and habit.status == "A"%}
                     <small style="float: right;"><a href="{{ url_for('unarchive_habit', habit_id=habit.id) }}">Continue Habit</a></small>
                 {% endif %}
@@ -64,13 +64,25 @@
     </div>
 
     <div id="deleteModal" class="modal">
-        <div style="white-space: pre-line;" class="message delete-message">
+        <div class="message delete-message">
             <span id="closeButton" class="close">&times;</span>
-            <p id="modal-text" style="margin: 0;">
+            <p class="modal-text">
                 Are you sure you want to delete?
                 Deleteing will permanently remove this habit and all of its progress.
             </p>
-            <button id="confirm" class="delete" onclick='deleteHabit( "{{habit.id}}" )'>Delete</button>
+            <button style="margin:0;" class="delete" onclick='deleteHabit( "{{habit.id}}" )'>Delete</button>
+        </div>
+    </div>
+
+    <div id="updateModal" class="modal">
+        <div class="message">
+            <span id="closeButton2" class="close">&times;</span>
+            <p id="modal-text" class="modal-text">
+            </p>
+            <form style="display: none;" action="" id="link-username">
+                <input id="username-input" class="link-form-input" placeholder="Username" type="text">
+            </form>
+            <button id="confirm" class="update" onclick='archiveHabit( "{{habit.id}}" )' style="padding: 8px 16px;">Archive</button>
         </div>
     </div>
 
@@ -81,6 +93,10 @@
     <br>
     <div class="chart-container">
         <canvas id="myChart"></canvas>
+    </div>
+
+    <div style="text-align: center; margin-top: 3%;">
+        <button onclick="displayMessageModal('link', '{{ habit.id }}')" class="navlinks">Link this habit with a friend</button>
     </div>
 
     <br><br>

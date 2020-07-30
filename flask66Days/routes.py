@@ -1,10 +1,10 @@
-from flask import render_template, redirect, url_for, flash, abort, request
+from flask import render_template, redirect, url_for, flash, abort, request, jsonify
 from flask66Days import app, db
 from flask66Days.forms import RegistrationForm, HabitForm 
-from flask66Days.models import User, Habit, CheckIn
+from flask66Days.models import User, Habit, CheckIn, Link, Message
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime, timedelta
-import sys
+import sys, json
 
 
 
@@ -22,12 +22,11 @@ def login():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user:
-            login_user(user)
-        else:
+        if not user:
             user = User(username=form.username.data)
             db.session.add(user)
             db.session.commit()
+        login_user(user)
         return redirect(request.args.get("next") or url_for("home"))
     return render_template('login.html', form=form)
 
@@ -66,7 +65,6 @@ def create_habit():
 def single_habit(habit_id):
     habit = Habit.query.get_or_404(habit_id)
     print(habit.status)
-    print(habit.checkins[0].cihabit)
     if habit.author != current_user:
         flash("not author")
         return redirect(url_for('habit_list'))
@@ -121,12 +119,6 @@ def archived():
     return render_template('habit_list.html', habits=archived_habits, now=datetime.now(), archive=True)
 
 
-@app.route('/background_process_test/<habit_id>')  
-def background_process_test(habit_id):
-    print ("Hello", habit_id)
-    return {"nothing": "nothing"}
-
-
 @app.route('/check_in/<int:habit_id>')
 def check_in(habit_id):
     habit = Habit.query.get_or_404(habit_id)
@@ -138,7 +130,6 @@ def check_in(habit_id):
         check_in = CheckIn(day=(now.date()-habit.date_created.date()).days, cihabit=habit)
         db.session.add(check_in)
         db.session.commit()
-        # habit = Habit(title=form.title.data, content=form.content.data, user_id=current_user.id)
         print("This check in should work!")
     else: 
         print("check in not available")
@@ -148,6 +139,11 @@ def check_in(habit_id):
 @app.route('/profile')
 def profile():
     habits = User.query.filter_by(id=current_user.id).first().habits
+    messages = current_user.messages
+    inbox = []
+    for message in messages:
+        if message.toUser == current_user.id:
+            inbox.append(message)
     completed = 0
     ip_habits = []
     for habit in habits:
@@ -155,7 +151,7 @@ def profile():
             ip_habits.append(habit)
         if len(habit.checkins) >= 66:
             completed += 1
-    return render_template('profile.html', habits=ip_habits, user=current_user.username, now=datetime.now(), completed=completed)
+    return render_template('profile.html', habits=ip_habits, user=current_user.username, now=datetime.now(), completed=completed, inbox=inbox)
 
 
 @app.route('/testnum15')
@@ -182,3 +178,41 @@ def unarchive_habit(habit_id):
     habit.status = "IP"
     db.session.commit()
     return redirect(url_for('habit_list'))
+
+@app.route('/link_request', methods=['POST'])
+def link_request():
+    if request.method == "POST":
+        print(request.json['id'])
+        print(request.json["username"])
+        to = User.query.filter_by(username=request.json['username']).first()
+        if to and current_user.id != to.id:
+            message = Message(fromUser=current_user.id, toUser=to.id, messageType="LR:"+str(request.json['id']))
+            db.session.add(message)
+            db.session.commit()
+            return json.dumps({"status": "success", "username": to.username})
+        else: 
+            print("should flash")
+            return json.dumps({"status": "fail"})
+
+@app.route('/link_habits', methods=['POST'])
+def link_habits():
+    habit1 = Habit.query.get(request.json["habit1"])
+    habit2 = Habit.query.get(request.json["habit2"])
+    print(habit1.links, habit2)
+    # Iterate over the shorter of the two lists
+    if (len(habit1.links) < len(habit2.links)):
+        links = habit1.links
+    else: 
+        links = habit2.links
+    for link in links:
+        if ((link.habit1==habit1.id and link.habit2==habit2.id) or (link.habit1==habit2.id and link.habit2==habit1.id)):
+            print("This link already exists!")
+            return "false"
+
+    link = Link(habit1=habit1.id, habit2=habit2.id)
+    db.session.add(link)
+    db.session.delete(Message.query.get(request.json["messageId"]))
+    db.session.commit()
+
+    flash("success???")
+    return "hello"
