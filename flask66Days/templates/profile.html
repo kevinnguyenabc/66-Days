@@ -3,7 +3,7 @@
 
 {% block content %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <h1 class="page-title">Welcome, {{ user }}</h1>
+    <h1 class="page-title">Welcome, {{ current_user.username }}</h1>
     <br>
 
     {% set habit_info = dict() %}
@@ -36,14 +36,18 @@
     <h2 class="page-title">Inbox</h2>
     <table>
         <tbody>
-            {% for message in inbox %}
-            <tr onclick="openMessage('{{ message.id }}', '{{ message.messageType }}')">
-                <td>{{ message.from.username }}</td>
-                {% if message.messageType.startswith("LR") %}
-                <td>{{ message.content }}</td>
-                {% endif %}
-            </tr>
-            {% endfor %}
+            {% if inbox|length == 0 %}
+            <td class="homepage">You have no messages!</td>
+            {% else %}
+                {% for message in inbox %}
+                <tr onclick='openMessage("{{ message.id }}", "{{ message.messageType }}", "{{ message.content }}")'>
+                    <td>{{ message.from.username }}</td>
+                    {% if message.messageType.startswith("LR") %}
+                    <td>{{ message.content }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            {% endif %}
         </tbody>
     </table>
 
@@ -53,10 +57,7 @@
             <span id="closeButton2" class="close">&times;</span>
             <p id="modal-text" class="modal-text">
             </p>
-            <form style="display: none;" action="" id="link-username">
-                <input id="username-input" class="link-form-input" placeholder="Username" type="text">
-            </form>
-            <select id="habit-chosen">
+            <select class="habit-select" id="habit-chosen">
                 {% for habit in habits %}
                 <option value="{{habit.id}}">{{habit.title}}</option>
                 {% endfor %}

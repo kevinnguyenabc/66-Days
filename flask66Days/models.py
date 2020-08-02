@@ -7,7 +7,7 @@ from flask_login import UserMixin
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin): # UserMixin is a class that contains is_authenticated, is_active... required by flask_login
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     habits = db.relationship('Habit', backref='author', lazy=True)

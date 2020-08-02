@@ -6,7 +6,21 @@
         <form method="POST">
             {{ form.hidden_tag() }}
             <div class="col">
-                {{ form.username(placeholder="Username", class="form-input", autocomplete="off") }}
+                <!-- {{ form.username(placeholder="Username", class="form-input", autocomplete="off") }} -->
+
+
+                {% if form.username.errors %}
+                    {{ form.username(class="form-input", placeholder="Username", autocomplete="off") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.username(class="form-input", placeholder="Username", autocomplete="off") }}
+                {% endif %}
+
+
             </div>
             {{ form.submit(class="form-btn") }}
         </form>

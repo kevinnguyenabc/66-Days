@@ -685,3 +685,30 @@ tr {
 tr:hover {
     background-color: rgb(33, 34, 36);
 }
+
+.habit-select {
+    display: block;
+    width: 50%;
+    font-size: 1.1em;
+    margin-bottom: 2%;
+    box-sizing: border-box;
+    box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+    border-radius: .5em;
+    padding: 3px;
+}
+
+.habit-select:focus {
+	border-color: #aaa;
+	box-shadow: 0 0 1px 3px rgba(59, 152, 252, 0.452);
+	color: #222;
+}
+
+.not_checked_in {
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1.5px rgb(221, 140, 140) solid;
+    color: rgba(253, 179, 179, 0.74);
+    border-radius: 15px;
+}

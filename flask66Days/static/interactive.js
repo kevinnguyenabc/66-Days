@@ -28,7 +28,7 @@ function displayMessageModal(type, id) {
         btn.show();
         modal = document.getElementById("updateModal");
         span = document.getElementById("closeButton2");
-        document.getElementById("modal-text").innerHTML = "\nWho would you like to link this habit with?";
+        document.getElementById("modal-text").innerHTML = "\nSend a link request to another user to see each others' progress on a habit! \nWho would you like to link this habit with?";
         document.getElementById("link-username").style.display = "block";
         btn.text("Link");
         btn.attr("onclick", "linkRequest("+id+")");
@@ -50,27 +50,30 @@ function displayMessageModal(type, id) {
     }
 }
 
-function openMessage(messageId, messageType){
+function openMessage(messageId, messageType, messageContent){
     let modal = document.getElementById("inboxMessageModal");
     let span = document.getElementById("closeButton2");
-    document.getElementById("modal-text").innerHTML = "\nChoose which habit to link!";
+    document.getElementById("modal-text").innerHTML = "\n"+ messageContent + "\nChoose which habit to link!";
     let btn = document.getElementById("confirm");
     btn.onclick = function() { 
         console.log(messageType.split(":")[1]);
         console.log(document.getElementById("habit-chosen").value);
         linkHabits(messageType.split(":")[1], document.getElementById("habit-chosen").value, messageId)
     }
-    // btn.attr("onclick", "linkHabits("+id+")");
+    document.getElementById("reject").onclick = function() {
+        jQuery.ajax({
+            contentType: "application/json",
+            method: "POST",
+            url: '/link_habits/reject/' + messageId
+        }).done(function() { location.reload(); } );
+    }
 
-    // When the user clicks on the button, open the modal
     modal.style.display = "block";
 
-    // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = "none";
     }
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";   

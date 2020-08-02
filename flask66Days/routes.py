@@ -17,8 +17,14 @@ def index():
 def home():
     return render_template('home.html')
 
+@app.route('/register')
+def register():
+    return render_template()
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -68,7 +74,11 @@ def single_habit(habit_id):
     if habit.author != current_user:
         flash("not author")
         return redirect(url_for('habit_list'))
-    return render_template('single_habit.html', habit=habit, now=datetime.now())
+    linked_habits = []
+    print(habit.links)
+    for link in habit.links:
+        linked_habits.append(Habit.query.get(link.habit1) if link.habit2 == habit.id else Habit.query.get(link.habit2))
+    return render_template('single_habit.html', habit=habit, now=datetime.now(), linked_habits=linked_habits)
 
 
 @app.route('/single_habit/<int:habit_id>/update', methods=['GET', 'POST'])
@@ -151,7 +161,7 @@ def profile():
             ip_habits.append(habit)
         if len(habit.checkins) >= 66:
             completed += 1
-    return render_template('profile.html', habits=ip_habits, user=current_user.username, now=datetime.now(), completed=completed, inbox=inbox)
+    return render_template('profile.html', habits=ip_habits, now=datetime.now(), completed=completed, inbox=inbox)
 
 
 @app.route('/testnum15')
@@ -179,6 +189,7 @@ def unarchive_habit(habit_id):
     db.session.commit()
     return redirect(url_for('habit_list'))
 
+
 @app.route('/link_request', methods=['POST'])
 def link_request():
     if request.method == "POST":
@@ -186,13 +197,14 @@ def link_request():
         print(request.json["username"])
         to = User.query.filter_by(username=request.json['username']).first()
         if to and current_user.id != to.id:
-            message = Message(fromUser=current_user.id, toUser=to.id, messageType="LR:"+str(request.json['id']))
+            message = Message(fromUser=current_user.id, toUser=to.id, messageType="LR:"+str(request.json['id']), 
+                            content=current_user.username +" would like to link their habit, " + Habit.query.get(request.json['id']).title)
             db.session.add(message)
             db.session.commit()
             return json.dumps({"status": "success", "username": to.username})
         else: 
-            print("should flash")
-            return json.dumps({"status": "fail"})
+            return json.dumps({"status": "fail", "username": request.json["username"]})
+
 
 @app.route('/link_habits', methods=['POST'])
 def link_habits():
@@ -206,7 +218,8 @@ def link_habits():
         links = habit2.links
     for link in links:
         if ((link.habit1==habit1.id and link.habit2==habit2.id) or (link.habit1==habit2.id and link.habit2==habit1.id)):
-            print("This link already exists!")
+            flash("This link already exists!")
+            print("already exists")
             return "false"
 
     link = Link(habit1=habit1.id, habit2=habit2.id)
@@ -216,3 +229,10 @@ def link_habits():
 
     flash("success???")
     return "hello"
+
+
+@app.route('/link_habits/reject/<message_id>', methods=['POST'])
+def reject_link(message_id):
+    db.session.delete(Message.query.get(message_id))
+    db.session.commit()
+    return ""

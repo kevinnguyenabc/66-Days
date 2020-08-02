@@ -1,19 +1,24 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Length, ValidationError
+from wtforms.validators import DataRequired, Length, ValidationError, Email
 from flask66Days.models import User
 
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email')
+    password = StringField('Password')
+    confirm_password = StringField('Confirm Password')
     submit = SubmitField('Log In')
 
-    '''
-    def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()
-        if user:
-            raise ValidationError('That username already exists')
-    '''
+
+    # def validate_username(self, username):
+    #     user = User.query.filter_by(username=username.data).first()
+    #     if user:
+    #         raise ValidationError('That username already exists')
+
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
     
 class HabitForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])

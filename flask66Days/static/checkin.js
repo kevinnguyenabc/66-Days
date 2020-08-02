@@ -27,8 +27,9 @@ function handleLinkRequest(data){
     if (data["status"] === "success"){
         document.getElementById("modal-text").innerHTML = "\nA link request was sent to " + data.username + "!";
         document.getElementById("link-username").style.display = "none";
-        // document.getElementById("confirm").style.display = "none";
         $("#confirm").hide();
+    } else if (data["status"] === "fail"){
+        document.getElementById("modal-text").innerHTML = "\nInvalid request to " + data.username + ".\nPlease try again.";
     }
 }
 
@@ -85,5 +86,5 @@ function linkHabits(habit1, habit2, messageId){
         method: "POST",
         url: "/link_habits",
         data: JSON.stringify({"habit1": habit1, "habit2": habit2, "messageId": messageId})
-    }).done(function(data) { console.log(data) } );
+    }).done(function(data) { location.reload(); } );
 }
