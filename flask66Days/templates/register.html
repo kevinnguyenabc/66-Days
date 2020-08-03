@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="create-habit-form">
+        <h1 class="form-title" style="margin-bottom: 25px;">Register Your Account</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+                <!-- {{ form.username(placeholder="Username", class="form-input", autocomplete="off") }} -->
+                {% if form.username.errors %}
+                    {{ form.username(class="form-input", placeholder="Username", autocomplete="off") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.username(class="form-input", placeholder="Username", autocomplete="off") }}
+                {% endif %}
+
+                {% if form.email.errors %}
+                {{ form.email(class="form-input", placeholder="Email", autocomplete="off") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                    {{ form.email(class="form-input", placeholder="Email", autocomplete="off") }}
+                {% endif %}
+
+                {% if form.password.errors %}
+                {{ form.password(class="form-input", placeholder="Password") }}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                    {{ form.password(class="form-input", placeholder="Password") }}
+                {% endif %}
+
+                {% if form.confirm_password.errors %}
+                {{ form.confirm_password(class="form-input", placeholder="Confirm Password") }}
+                <div class="invalid-feedback">
+                    {% for error in form.confirm_password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                    {{ form.confirm_password(class="form-input", placeholder="Confirm Password") }}
+                {% endif %}
+
+
+                {{ form.submit(class="form-btn", style="width: 95%; font-size: 20px; height: 45px; display: block; border-radius: 10px; margin: 30px auto 20px auto;") }}
+
+        </form>
+    </div>
+
+{% endblock content %}

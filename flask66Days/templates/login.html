@@ -3,27 +3,39 @@
 {% block content %}
 
     <div class="create-habit-form">
+        <h1 class="form-title">Login</h1>
         <form method="POST">
             {{ form.hidden_tag() }}
-            <div class="col">
-                <!-- {{ form.username(placeholder="Username", class="form-input", autocomplete="off") }} -->
 
 
-                {% if form.username.errors %}
-                    {{ form.username(class="form-input", placeholder="Username", autocomplete="off") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.username.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.username(class="form-input", placeholder="Username", autocomplete="off") }}
-                {% endif %}
+            {% if form.email.errors %}
+                {{ form.email(class="form-input", placeholder="Email", autocomplete="off") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.email(class="form-input", placeholder="Email", autocomplete="off") }}
+            {% endif %}
 
+            
+            {% if form.password.errors %}
+                {{ form.password(class="form-input", placeholder="Password", autocomplete="off") }}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.password(class="form-input", placeholder="Password", autocomplete="off") }}
+            {% endif %}
 
-            </div>
-            {{ form.submit(class="form-btn") }}
+            {{ form.submit(class="form-btn", style="width: 95%; font-size: 20px; height: 45px; display: block; border-radius: 10px; margin: 30px auto 20px auto;") }}
         </form>
+        <div class="text-muted" style="margin: 0 0 15px 15px;">
+            Don't have an account? <a class="navlinks" href="{{ url_for('register') }}" style="padding: 0;">Register</a> now!
+        </div>
     </div>
 
 {% endblock content %}

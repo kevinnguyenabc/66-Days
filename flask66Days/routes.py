@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash, abort, request, jsonify
-from flask66Days import app, db
-from flask66Days.forms import RegistrationForm, HabitForm 
+from flask66Days import app, db, bcrypt
+from flask66Days.forms import RegistrationForm, HabitForm, LoginForm 
 from flask66Days.models import User, Habit, CheckIn, Link, Message
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime, timedelta
@@ -17,23 +17,32 @@ def index():
 def home():
     return render_template('home.html')
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template()
+    # if current_user.is_authenticated:
+    #     return redirect(url_for('home'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        hashed_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, password=hashed_pw)
+        db.session.add(user)
+        db.session.commit()
+        flash("Your account has been created! You can now log in.")
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-    form = RegistrationForm()
+    form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if not user:
-            user = User(username=form.username.data)
-            db.session.add(user)
-            db.session.commit()
-        login_user(user)
-        return redirect(request.args.get("next") or url_for("home"))
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user)
+            return redirect(request.args.get("next") or url_for("home"))
+        else: 
+            flash("Login unsuccessful. Please try again.")
     return render_template('login.html', form=form)
 
 
@@ -63,7 +72,7 @@ def create_habit():
         db.session.commit()
         flash('Your habit has been created!', 'success')
         return redirect(url_for('habit_list'))
-    return render_template('create_habit.html', form = form, title='Create a New Habit', head='Create Habit Page', method="Begin your journey now!") 
+    return render_template('create_habit.html', form = form, title='Create a New Habit', head='Create Habit Page', description="Begin your journey now!") 
     # This passes the flask form "HabitForm into create_habit.html"
 
 

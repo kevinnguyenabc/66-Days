@@ -65,7 +65,7 @@ const style = getComputedStyle(progressBar);
 progressBar.style.setProperty('--width', v);
 progressBar.style.setProperty('--scale', 100 / s + "%");
 
-if (v === s){
+if (v === s && v > 0){
     setTimeout( function() {
         progressBar.style.setProperty("animation", "1s pulse");
     }, 2000);

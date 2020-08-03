@@ -440,7 +440,7 @@ a.login:hover {
     border: 3px solid rgb(64, 66, 75);    
     padding: 12px 10px;
     width: 95%;
-    margin: 5px;
+    margin: 10px auto;
     line-height: 25px;
     transition: 0.2s ease-out;
 }

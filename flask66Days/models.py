@@ -10,6 +10,8 @@ def load_user(user_id):
 class User(db.Model, UserMixin): # UserMixin is a class that contains is_authenticated, is_active... required by flask_login
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable= False)
     habits = db.relationship('Habit', backref='author', lazy=True)
     messages = db.relationship('Message', primaryjoin="User.id==Message.toUser", backref="to")
     sent_messages = db.relationship('Message', primaryjoin="User.id==Message.fromUser", backref="from")
