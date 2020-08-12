@@ -3,7 +3,12 @@
 
 {% block content %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <h1 class="page-title">Welcome, {{ current_user.username }}</h1>
+    <div style="text-align: center; position: relative;">
+        <h1 style="display: inline-block;">Welcome, {{ current_user.username }}</h1>
+        <a class="text-muted" style="position: absolute; right: 10px; top: 10px;" href="{{ url_for('account') }}">Account Settings &#9881;</a>
+    </div>
+
+
     <br>
 
     {% set habit_info = dict() %}
@@ -27,6 +32,7 @@
                 <div class="progress-done progress-done-habits"></div>
                 <div style="font-size: 22px;" class="progress-text">{{ count.value }} / {{ habits | length }}</div>
             </div>
+            <br>
             <h2>Total Habits Completed:</h2>
             <h2 id="num">{{completed}}</h2>
         </div>

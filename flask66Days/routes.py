@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash, abort, request, jsonify
 from flask66Days import app, db, bcrypt
-from flask66Days.forms import RegistrationForm, HabitForm, LoginForm 
+from flask66Days.forms import RegistrationForm, HabitForm, LoginForm, UpdateAccountForm
 from flask66Days.models import User, Habit, CheckIn, Link, Message
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime, timedelta
@@ -11,7 +11,7 @@ import sys, json
 @app.route('/')
 @login_required
 def index():
-    return redirect(url_for('habit_list'))
+    return redirect(url_for('home'))
 
 @app.route('/home')
 def home():
@@ -19,8 +19,8 @@ def home():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('home'))
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -165,11 +165,13 @@ def profile():
             inbox.append(message)
     completed = 0
     ip_habits = []
+    print("working1")
     for habit in habits:
         if habit.status == "IP":
             ip_habits.append(habit)
         if len(habit.checkins) >= 66:
             completed += 1
+    print("working2")
     return render_template('profile.html', habits=ip_habits, now=datetime.now(), completed=completed, inbox=inbox)
 
 
@@ -245,3 +247,19 @@ def reject_link(message_id):
     db.session.delete(Message.query.get(message_id))
     db.session.commit()
     return ""
+
+
+@app.route('/profile/account', methods=['GET', 'POST'])
+@login_required
+def account():
+    form = UpdateAccountForm() 
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('Your account has been updated!')
+        return redirect(url_for('profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+    return render_template('account.html', form = form)

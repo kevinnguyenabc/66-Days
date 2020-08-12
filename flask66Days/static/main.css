@@ -389,7 +389,7 @@ a.login:hover {
     top: .6em;
     left: .7em;
     bottom: .6em;   
-    background-image: linear-gradient(to right, rgb(181, 216, 157), rgb(155, 224, 127) 100px, rgb(137, 190, 102) 200px, rgb(93, 153, 53) 400px, rgb(58, 151, 14));
+    background-image: linear-gradient(to right, rgb(181, 216, 157), rgb(155, 224, 127) 100px, rgb(137, 190, 102) 200px, rgb(103, 175, 56) 350px, rgb(54, 172, 0));
     width: calc(var(--width, 0) * var(--scale, 0%));
     min-width: 4rem;
     max-width: calc(100% - 1.4em);
@@ -433,13 +433,13 @@ a.login:hover {
 
 .form-input {
     display: block;
-    color: white;
+    color: rgba(255, 255, 255, 0.753);
     font-size: 18px;
     background-color: rgb(64, 66, 75);
     border-radius: 10px;
     border: 3px solid rgb(64, 66, 75);    
     padding: 12px 10px;
-    width: 95%;
+    width: 100%;
     margin: 10px auto;
     line-height: 25px;
     transition: 0.2s ease-out;

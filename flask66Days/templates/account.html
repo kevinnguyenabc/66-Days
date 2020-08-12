@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="create-habit-form" style="padding: 1% 2%">
+        <h1 class="form-title">Update Account</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            {{ form.username.label(class="form-control-label") }}
+            {% if form.username.errors %}
+            {{ form.username(class="form-input", placeholder="Enter a username", autocomplete="off") }}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+                {{ form.username(class="form-input", placeholder="Enter a username", autocomplete="off") }}
+            {% endif %}
+
+            {{ form.email.label(class="form-control-label") }}
+            {% if form.email.errors %}
+                {{ form.email(class="form-input", placeholder="Enter an email", autocomplete="off") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.email(class="form-input", placeholder="Enter an email", autocomplete="off") }}
+            {% endif %}
+
+            {{ form.submit(class="form-btn", style="width: 100%; font-size: 20px; height: 45px; display: block; border-radius: 10px; margin: 30px auto 20px auto;") }}
+        </form>
+
+    </div>
+
+{% endblock content %}

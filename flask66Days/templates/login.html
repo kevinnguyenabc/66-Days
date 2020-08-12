@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <div class="create-habit-form">
+    <div class="create-habit-form" style="padding: 1% 2%">
         <h1 class="form-title">Login</h1>
         <form method="POST">
             {{ form.hidden_tag() }}
@@ -31,9 +31,9 @@
                 {{ form.password(class="form-input", placeholder="Password", autocomplete="off") }}
             {% endif %}
 
-            {{ form.submit(class="form-btn", style="width: 95%; font-size: 20px; height: 45px; display: block; border-radius: 10px; margin: 30px auto 20px auto;") }}
+            {{ form.submit(class="form-btn", style="width: 100%; font-size: 20px; height: 45px; display: block; border-radius: 10px; margin: 30px auto 20px auto;") }}
         </form>
-        <div class="text-muted" style="margin: 0 0 15px 15px;">
+        <div class="text-muted" style="margin: 0 0 15px;">
             Don't have an account? <a class="navlinks" href="{{ url_for('register') }}" style="padding: 0;">Register</a> now!
         </div>
     </div>
