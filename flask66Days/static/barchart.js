@@ -26,7 +26,7 @@ var myChart = new Chart(ctx, {
             backgroundColor: bgcolors,
             borderColor: bdcolors,
             borderWidth: 1.3,
-            barPercentage: .7,
+            barPercentage: .5,
             data: data,
     }]},
     options: {

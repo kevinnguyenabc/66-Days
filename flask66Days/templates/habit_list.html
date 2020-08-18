@@ -9,16 +9,15 @@
         {% endif %}
     </div>
 
-
     {% if habits|length == 0 %}
         <div class="homepage">
             {% if not archive %}
-            <p>You currently have no habits! 
-                <a style="text-decoration: underline; padding: 0;" href=" {{ url_for('create_habit') }}" class="navlinks">Create</a> one now!
-            </p>
+                <p>You currently have no habits! 
+                    <a style="text-decoration: underline; padding: 0;" href=" {{ url_for('create_habit') }}" class="navlinks">Create</a> one now!
+                </p>
             {% else %}
-            <p>You have no archived habits.</p>
-            <a href=" {{ url_for('habit_list') }} " class="navlinks">Back to Habits List</a>
+                <p>You have no archived habits. You can archive habits that have been completed for at least 66 days.</p><br>
+                <a href=" {{ url_for('habit_list') }} " class="navlinks">Back to Habits List</a>
             {% endif %}
 
         </div>  

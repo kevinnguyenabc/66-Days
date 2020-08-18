@@ -5,7 +5,7 @@ function handleCheckIn(id){
     button.removeClass("check_in");
     button.prop("onclick", null);
     $("#habit-"+id).css("transform", "scale(1.1)")
-    setTimeout( function () { $("#habit-"+id).css("transform", "scale(1.02)") }, 300); 
+    setTimeout( function () { $("#habit-"+id).css("transform", "") }, 300); 
     let counter = $("#streak-counter");
     console.log(counter.text())
     let days = counter.text().split(" ")[0];

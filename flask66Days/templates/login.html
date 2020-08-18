@@ -7,7 +7,6 @@
         <form method="POST">
             {{ form.hidden_tag() }}
 
-
             {% if form.email.errors %}
                 {{ form.email(class="form-input", placeholder="Email", autocomplete="off") }}
                 <div class="invalid-feedback">
@@ -18,7 +17,6 @@
             {% else %}
                 {{ form.email(class="form-input", placeholder="Email", autocomplete="off") }}
             {% endif %}
-
             
             {% if form.password.errors %}
                 {{ form.password(class="form-input", placeholder="Password", autocomplete="off") }}

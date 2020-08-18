@@ -31,5 +31,6 @@ Users check in with their habits daily in order to keep track of their progress,
 <img src="/img/SingleHabitPage.png" width="900" height="450"/>  
 Clicking on a habit displays useful information about the progress of the habit, 
 including the current streak (how many consecutive days has the user checked in) and a 
-graph detailing the user's checkins over time.
-.
+graph detailing the user's checkins over time. Here, the user can send a request to another user 
+to link their habits with one another. If the other user accepts, each user can see whether or not
+the other has checked in for the day in order to keep each other accountable.

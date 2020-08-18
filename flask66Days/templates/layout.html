@@ -9,7 +9,6 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
     
     {% if head %}
         <title>Flask 66 Days - {{ head }}</title>
@@ -38,13 +37,12 @@
     {% block content %}
     {% endblock %}
 
-
     <script src="{{ url_for('static', filename='interactive.js') }}"></script>
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            {% set message = messages[0][1] %}
+            {% set class, message = messages[0] %}
             <div id="messageModal" class="modal">
-                <div class="message">
+                <div class="message {{class}}">
                     <span id="close" class="close">&times;</span>
                     <p>
                         {{ message }}
@@ -54,8 +52,6 @@
             <script>displayMessageModal("message")</script>
         {% endif %}
     {% endwith %}
-
-
 
 </body>
 </html>

@@ -1,13 +1,11 @@
 {% extends "layout.html" %}
 
-
 {% block content %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <div style="text-align: center; position: relative;">
         <h1 style="display: inline-block;">Welcome, {{ current_user.username }}</h1>
-        <a class="text-muted" style="position: absolute; right: 10px; top: 10px;" href="{{ url_for('account') }}">Account Settings &#9881;</a>
+        <a class="text-muted settings" style="position: absolute; right: 10px; top: 10px;" href="{{ url_for('account') }}">Account Settings &#9881;</a>
     </div>
-
 
     <br>
 
@@ -57,7 +55,6 @@
         </tbody>
     </table>
 
-
     <div id="inboxMessageModal" class="modal">
         <div class="message">
             <span id="closeButton2" class="close">&times;</span>
@@ -72,7 +69,6 @@
             <button id="reject" class="delete">Reject</button>
         </div>
     </div>
-
 
     <script>
         let v = "{{ count.value }}"
