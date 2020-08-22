@@ -717,3 +717,7 @@ tr:hover {
 .settings:hover {
     color: rgb(156, 156, 156);
 }
+
+.low-opacity {
+    opacity: 0.8;
+}

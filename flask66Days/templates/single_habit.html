@@ -104,7 +104,10 @@
                 <div>
                     <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
                 </div>
-                <h3 style="margin-top: 1%;">{{ habit.author.username }}'s {{ habit.title }}</h3>
+                <h3 style="margin: 1% auto 1% auto;">{{ habit.author.username }}'s {{ habit.title }}, {{ habit.checkins|length }} days completed.</h3>
+                <div style="--width: {{ habit.checkins|length }}"  class="progress-bar progress-bar-small">
+                    <div class="progress-done progress-done-small"></div>
+                </div>
                 <p class="habit-content">{{ habit.content }}</p>
                 {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
                     <p class="checked_in" style="border-color: rgba(209, 209, 255, 0.644); color: rgba(209, 209, 255, 0.699);" >{{ habit.author.username }} has checked in today! &#10003;</p>

@@ -1,5 +1,5 @@
 # 66 Days
-<img src="/img/66DaysHome.gif" width="900" height="400"/>
+<img src="/img/66DaysHome.gif" width="900" height="450"/>
 "66 Days" is a habit tracker that incorporates psychology research as the basis for its design methodologies, encouraging users to stay on track for a consecutive 66 days. 
 Built with Flask, "66 Days" is an ongoing project that currently has the following features:  
 

@@ -153,6 +153,7 @@ def check_in(habit_id):
 @app.route('/profile')
 def profile():
     habits = User.query.filter_by(id=current_user.id).first().habits
+    now = datetime.now()
     messages = current_user.messages
     inbox = []
     for message in messages:
@@ -160,12 +161,21 @@ def profile():
             inbox.append(message)
     completed = 0
     ip_habits = []
+    times_checked_in = 0
+    total = 0
     for habit in habits:
         if habit.status == "IP":
             ip_habits.append(habit)
+            x = (now.date() - habit.date_created.date()).days
+            if x-10 < 0:
+                total += 1+x
+                times_checked_in += len(habit.checkins)
+            else:
+                total += 10
+                times_checked_in += len([i for i in habit.checkins if i.day > x-10])
         if len(habit.checkins) >= 66:
             completed += 1
-    return render_template('profile.html', habits=ip_habits, now=datetime.now(), completed=completed, inbox=inbox)
+    return render_template('profile.html', habits=ip_habits, now=now, completed=completed, inbox=inbox, rate=int(times_checked_in/total*100))
 
 
 @app.route('/single_habit/<int:habit_id>/archive', methods=['POST'])
