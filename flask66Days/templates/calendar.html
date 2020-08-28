@@ -3,10 +3,28 @@
 {% block content %}
 
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js'></script>
+    <script type="module" src="{{ url_for('static', filename='calendar.js') }}"></script>
 
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css' rel='stylesheet' />
-    <div style="width: 70%; height: 80%; margin: auto;">
-        <div id="calendar"></div>
+    <br>
+    <div style="display: grid; grid-template-columns: 5fr 3fr;">
+        <div style="width: 75%;margin-left:auto; margin-right:1%;">
+                <div id="calendar"></div>
+                <button class="form-btn" style="width: 100px;" onclick='displayMessageModal("delete")'>Save</button>
+                <a class="form-btn form-btn-cancel" style="width: 100px;" href="{{ url_for('single_habit', habit_id=habit.id, habit_title=habit.title) }}">Cancel</a>    
+           </div>
+        <div style="margin-left: 15%;">
+            <h1 style="margin: 20px 0 15px 15px;">Legend</h1>
+            <div class="legend-color" style="background-color: #517C64;"></div>
+            <span style="font-size: 25px;">Start</span>
+            <br>
+            <div class="legend-color" style="background-color: #505992;"></div>
+            <span style="font-size: 25px;">Checked In</span>
+            <br>
+            <div class="legend-color" style="background-color: #717266;"></div>
+            <span style="font-size: 25px;">Today</span>
+
+        </div>
     </div>
 
     {% set checkins = [] %}
@@ -14,10 +32,20 @@
         {% if checkins.append(checkin.day) %}{% endif %}
     {% endfor %}
 
+    <div id="deleteModal" class="modal">
+        <div class="message">
+            <span id="closeButton" class="close">&times;</span>
+            <p class="modal-text">
+                Are you sure you want to make these changes?
+            </p>
+            <button class="update" style="padding: 8px 16px;" id="updateCheckInsButton">Save</button>
+        </div>
+    </div>
+
     <script>
+        let id = "{{habit.id}}"
         let date_created = "{{habit.date_created}}"
         let checkins = "{{checkins}}"
     </script>
 
-    <script type="module" src="{{ url_for('static', filename='calendar.js') }}"></script>
 {% endblock content %}

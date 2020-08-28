@@ -25,8 +25,8 @@ class Habit(db.Model):
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now)
     content = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    status = db.Column(db.String(20), default="IP")
-    checkins = db.relationship('CheckIn', backref='cihabit', lazy=True)
+    status = db.Column(db.String(20), default="IP") 
+    checkins = db.relationship('CheckIn', backref='cihabit', lazy=True, order_by="CheckIn.day") # order_by was necessary when updating checkins
     links = db.relationship('Link', primaryjoin="or_(Habit.id==Link.habit1, Habit.id==Link.habit2)")
 
     def __repr__(self):

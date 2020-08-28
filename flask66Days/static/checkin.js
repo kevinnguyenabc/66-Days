@@ -5,7 +5,7 @@ function handleCheckIn(id){
     button.removeClass("check_in");
     button.prop("onclick", null);
     $("#habit-"+id).css("transform", "scale(1.1)")
-    setTimeout( function () { $("#habit-"+id).css("transform", "") }, 300); 
+    setTimeout( function () { $("#habit-"+id).css("transform", ""); $("#habit-"+id).addClass("low-opacity") }, 300); 
     let counter = $("#streak-counter");
     console.log(counter.text())
     let days = counter.text().split(" ")[0];
@@ -16,10 +16,6 @@ function handleCheckIn(id){
     progress.text((parseInt(days)+1) + " Days Completed");
 }
 
-function handleDeleteHabit(url){
-    window.location.href = url;
-    console.log(url)
-}
 
 function handleLinkRequest(data){
     console.log(data);
@@ -53,7 +49,7 @@ function deleteHabit(id){
         dataType: "text",  // Setting return data type
         method: "POST",// Setting request method
         url: "/single_habit/" + id + "/delete", // Setting request url, mapped to routes.py
-        success: (url) => handleDeleteHabit(url) // Setting callback function to handle data returned successfully by the SingleStarServlet
+        success: (url) => {window.location.href = url;} // Setting callback function to handle data returned successfully by the SingleStarServlet
     });
 }
 

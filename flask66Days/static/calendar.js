@@ -1,4 +1,5 @@
 checkins = checkins.slice(1, -1).split(",");
+checkins = checkins.map((value) => parseInt(value));
 console.log(checkins);
 
 let date = new Date(date_created);
@@ -11,15 +12,16 @@ let newCheckIns = [];
 
 for (let i = 0; i < checkins.length; i++) {
   let newDate = new Date();
-  newDate.setDate(date.getDate() + parseInt(checkins[i]));
-  newCheckIns.push(parseInt(checkins[i]));
+  newDate.setDate(date.getDate() + checkins[i]);
+  newCheckIns.push(checkins[i]);
   let int = newDate.getTime() - newDate.getTimezoneOffset() * 60 * 1000;
   newDate = new Date(int);
   events.push({
     start: newDate.toISOString().slice(0, 10),
     display: "background",
-    backgroundColor: "blue",
-    id: parseInt(checkins[i]),
+    overlay: false,
+    backgroundColor: "#000F9A",
+    id: checkins[i],
   });
 }
 
@@ -37,23 +39,24 @@ document.addEventListener("DOMContentLoaded", function () {
         start: new Date(date_created).toISOString().split("T")[0],
         display: "background",
         backgroundColor: "green",
-        title: "Start"
+        title: "Start",
       },
     ].concat(events),
     dateClick: function (info) {
-      // alert('Clicked on: ' + info.dateStr);
-      // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-      // alert('Current view: ' + info.view.type);
-      // change the day's background color just for fun
       console.log("date clicked");
-      console.log("inside dateclick events", events);
 
       let id = info.date.getDate() - date.getDate();
       if (newCheckIns.includes(id)) {
         info.dayEl.style.backgroundColor = "";
         newCheckIns = newCheckIns.filter((val) => val !== id);
       } else {
-        info.dayEl.style.backgroundColor = "rgb(30, 50, 211)";
+        console.log(date.toJSON().slice(0, 10));
+        console.log(info.date.toJSON().slice(0, 10));
+
+        info.dayEl.style.backgroundColor =
+          date.toJSON().slice(0, 10) == info.date.toJSON().slice(0, 10)
+            ? "#1940A3"
+            : "#355489";
         newCheckIns.push(id);
       }
       console.log(newCheckIns);
@@ -75,22 +78,20 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   });
   calendar.render();
+});
 
-  //   function eventExists(dateStr) {
-  //     let id = dateStr.getDate() - date.getDate();
-  //     console.log(dateStr.getDate() - date.getDate());
-  //     console.log("Hello", calendar.getEventById(id));
-  //     return calendar.getEventById(id);
-  //   }
-
-  function addEvent(id) {
-    event = {
-      start: newDate.toISOString().split("T")[0],
-      display: "background",
-      backgroundColor: "blue",
+console.log(newCheckIns.toString());
+$("#updateCheckInsButton").click(function updateCheckins() {
+  jQuery.ajax({
+    dataType: "text", // Setting return data type
+    contentType: "application/json",
+    method: "POST", // Setting request method
+    url: "/update_checkins", // Setting request url, mapped to routes.py
+    data: JSON.stringify({
       id: id,
-      checked_in: true,
-      editable: true,
-    };
-  }
+      checkIns: checkins,
+      newCheckIns: newCheckIns,
+    }),
+    success: (url) => (window.location.href = url), // Setting callback function to handle data returned successfully by the SingleStarServlet
+  });
 });

@@ -26,14 +26,14 @@
         <ol class="habits-list" id="sortable">
         {% for habit in habits %}
             {% if not archive %}
-            {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
-                <li class="low-opacity habit" id="habit-{{habit.id}}">
-            {% else %}
-                <li class="habit" id="habit-{{habit.id}}">
-            {% endif %}
+                {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
+                    <li class="low-opacity habit" id="habit-{{habit.id}}">
+                {% else %}
+                    <li class="habit" id="habit-{{habit.id}}">
+                {% endif %}
                         <div>
                             <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
-                            <h2 class="habit-title"><a href="{{ url_for('single_habit', habit_id=habit.id) }}">{{ habit.title }}</a></h2>
+                            <h2 class="habit-title"><a href="{{ url_for('single_habit', habit_id=habit.id, habit_title=habit.title) }}">{{ habit.title }}</a></h2>
                             <div style="--width: {{ habit.checkins|length }}"  class="progress-bar progress-bar-small">
                                 <div class="progress-done progress-done-small"></div>
                             </div>
@@ -50,7 +50,7 @@
                 <li class="habit" id="habit-{{habit.id}}">
                     <div>
                         <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
-                        <h2 class="habit-title"><a href="{{ url_for('single_habit', habit_id=habit.id) }}">{{ habit.title }}</a></h2>
+                        <h2 class="habit-title"><a href="{{ url_for('single_habit', habit_id=habit.id, habit_title=habit.title) }}">{{ habit.title }}</a></h2>
                         <div style="--width: {{ habit.checkins|length }}"  class="progress-bar progress-bar-small">
                             <div class="progress-done progress-done-small"></div>
                         </div>

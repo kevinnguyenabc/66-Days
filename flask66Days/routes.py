@@ -4,6 +4,7 @@ from flask66Days.forms import RegistrationForm, HabitForm, LoginForm, UpdateAcco
 from flask66Days.models import User, Habit, CheckIn, Link, Message
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime, timedelta
+from pytz import timezone
 import sys, json
 
 
@@ -60,7 +61,7 @@ def logout():
 def habit_list():
     habits = User.query.filter_by(id=current_user.id).first().habits
     habits = [habit for habit in habits if habit.status=="IP"]
-    return render_template('habit_list.html', habits=habits, now=datetime.now())
+    return render_template('habit_list.html', habits=habits, now=datetime.now(timezone('US/Pacific')))
 
 
 @app.route('/create', methods=['GET', 'POST'])
@@ -69,7 +70,7 @@ def create_habit():
     form = HabitForm() 
     form.submit.label.text = "Create"
     if form.validate_on_submit():
-        habit = Habit(title=form.title.data, content=form.content.data, user_id=current_user.id)
+        habit = Habit(title=form.title.data, content=form.content.data, user_id=current_user.id, date_created=datetime.now(timezone('US/Pacific')))
         db.session.add(habit)
         db.session.commit()
         flash('Your habit has been created!', 'success')
@@ -78,15 +79,17 @@ def create_habit():
     return render_template('create_habit.html', form = form, title='Create a New Habit', head='Create Habit Page', description="Begin your journey now!") 
 
 
-@app.route('/single_habit/<int:habit_id>', methods=['GET', 'POST'])
-def single_habit(habit_id):
+@app.route('/single_habit/<int:habit_id>/<habit_title>', methods=['GET', 'POST'])
+def single_habit(habit_id, habit_title):
     habit = Habit.query.get_or_404(habit_id)
     if habit.author != current_user:
         abort(403)
     linked_habits = []
+    print(habit.checkins)
+    print(habit.checkins[-1].day+1)
     for link in habit.links:
         linked_habits.append(Habit.query.get(link.habit1) if link.habit2 == habit.id else Habit.query.get(link.habit2))
-    return render_template('single_habit.html', habit=habit, now=datetime.now(), linked_habits=linked_habits)
+    return render_template('single_habit.html', habit=habit, now=datetime.now(timezone('US/Pacific')), linked_habits=linked_habits)
 
 
 @app.route('/single_habit/<int:habit_id>/update', methods=['GET', 'POST'])
@@ -102,11 +105,11 @@ def update_habit(habit_id):
         habit.content = form.content.data
         db.session.commit()
         flash('Your habit has been updated', 'success')
-        return redirect(url_for('single_habit', habit_id=habit.id))
+        return redirect(url_for('single_habit', habit_id=habit.id, habit_title=habit.title))
     elif request.method == 'GET':
         form.title.data = habit.title
         form.content.data = habit.content
-    return render_template('create_habit.html', form = form, title='Update Habit', head='Update Page', id=habit.id)
+    return render_template('create_habit.html', form = form, title='Update Habit', head='Update Page', id=habit.id, habit_title=habit.title)
 
 
 @app.route('/single_habit/<int:habit_id>/delete', methods=['POST'])
@@ -132,7 +135,7 @@ def archived():
     for habit in habits:
         if habit.status == "A":
             archived_habits.append(habit)
-    return render_template('habit_list.html', habits=archived_habits, now=datetime.now(), archive=True)
+    return render_template('habit_list.html', habits=archived_habits, now=datetime.now(timezone('US/Pacific')), archive=True)
 
 
 @app.route('/check_in/<int:habit_id>')
@@ -140,7 +143,7 @@ def check_in(habit_id):
     habit = Habit.query.get_or_404(habit_id)
     if habit.author != current_user:
         abort(403)
-    now = datetime.now()
+    now = datetime.now(timezone('US/Pacific'))
     if (len(habit.checkins) == 0 or (now.date() - habit.date_created.date()).days != habit.checkins[-1].day):
         check_in = CheckIn(day=(now.date()-habit.date_created.date()).days, cihabit=habit)
         db.session.add(check_in)
@@ -152,8 +155,10 @@ def check_in(habit_id):
 
 @app.route('/profile')
 def profile():
+    print(datetime.now(timezone('US/Pacific')))
+    print(datetime.now())
     habits = User.query.filter_by(id=current_user.id).first().habits
-    now = datetime.now()
+    now = datetime.now(timezone('US/Pacific'))
     messages = current_user.messages
     inbox = []
     for message in messages:
@@ -252,3 +257,28 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     return render_template('account.html', form = form)
+
+
+@app.route('/calendar/<int:habit_id>')
+def calendar(habit_id):
+    habit = Habit.query.get_or_404(habit_id)
+    return render_template('calendar.html', habit=habit)
+
+
+@app.route('/update_checkins', methods=['POST'])
+def update_checkins():
+    habit = Habit.query.get(request.json["id"])
+    checkIns = request.json["checkIns"]
+    newCheckIns = request.json["newCheckIns"]
+    addList = set(newCheckIns) - set(checkIns)
+    removeList = set(checkIns) - set(newCheckIns)
+    removeCheckIns = CheckIn.query.filter(CheckIn.habit_id==request.json["id"], CheckIn.day.in_(removeList)).all()
+    for checkIn in removeCheckIns:
+        db.session.delete(checkIn)
+    for day in addList:
+        checkIn = CheckIn(day=day, cihabit=habit)
+        db.session.add(checkIn)
+    db.session.commit()
+    return url_for('single_habit', habit_id=habit.id, habit_title=habit.title)
+
+
