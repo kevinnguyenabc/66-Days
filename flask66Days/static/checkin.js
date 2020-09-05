@@ -30,13 +30,14 @@ function handleLinkRequest(data){
 }
 
 
-function checkin(id){
+function checkin(id, e){
     jQuery.ajax({
         dataType: "json",  // Setting return data type
         method: "GET",// Setting request method
         url: "/check_in/" + id, // Setting request url, mapped to routes.py
         success: (id) => handleCheckIn(id) // Setting callback function to handle data returned successfully by the SingleStarServlet
     });
+    e.stopPropagation();
 }
 
 $("#deleteForm").submit(function(e) {
@@ -83,4 +84,8 @@ function linkHabits(habit1, habit2, messageId){
         url: "/link_habits",
         data: JSON.stringify({"habit1": habit1, "habit2": habit2, "messageId": messageId})
     }).done(function(data) { location.reload(); } );
+}
+
+function goToHabit(id, title){
+    window.location = "/single_habit/" + id + "/" + title;
 }

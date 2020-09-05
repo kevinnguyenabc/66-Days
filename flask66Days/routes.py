@@ -5,7 +5,7 @@ from flask66Days.models import User, Habit, CheckIn, Link, Message
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime, timedelta
 from pytz import timezone
-import sys, json
+import sys, json, requests
 
 
 
@@ -282,3 +282,7 @@ def update_checkins():
     return url_for('single_habit', habit_id=habit.id, habit_title=habit.title)
 
 
+@app.route('/blah')
+def blah():
+    response = requests.get("https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Clone10?api_key=RGAPI-2e4f5f42-6350-46e5-af5b-51c0cc6a73d5")
+    return (response.json())

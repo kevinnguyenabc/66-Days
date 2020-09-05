@@ -15,7 +15,7 @@ body {
     margin: 0px;
     padding: 0px;
     color: rgb(235, 235, 235);
-    height: auto;
+    height: 100%;
 }
 
 header {
@@ -65,7 +65,7 @@ button.navlinks:hover, a.navlinks:hover, h2 a:hover {
 #logo {
     font-size: 25px;
     color: rgb(151, 211, 151);
-    padding: 0 5px;
+    padding: 0 20px 0 5px;
     transition: 1s;
 }
 
@@ -104,8 +104,7 @@ button.navlinks:hover, a.navlinks:hover, h2 a:hover {
 
 .habits {
     width: 85%;
-    margin: auto;
-    margin-top: 0;
+    margin: 0 auto 6rem auto;
 }
 
 .habits-list {  
@@ -119,7 +118,6 @@ button.navlinks:hover, a.navlinks:hover, h2 a:hover {
     flex-wrap: wrap;
     justify-content: flex-start;
 }
-
 
 @keyframes grow {
     0% {
@@ -404,6 +402,10 @@ a.login:hover {
     height: auto;
     background-color: rgb(71, 76, 87);
     border-radius: 15px;
+    /* margin: auto;
+    justify-content: center;
+    align-content: center;
+    text-align: center; */
     top: 50%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
@@ -646,9 +648,10 @@ a.login:hover {
 }
 
 .bottom-link {
-    margin: 200px auto 100px auto; 
+    display: block;
+    margin: 5rem 0 2rem 0;
     text-align: center; 
-    font-size: 1.3em;
+    font-size: 1.3rem;
 }
 
 .link-form-input {
@@ -743,4 +746,43 @@ tr:hover {
     height: 15px; 
     border: rgba(198, 204, 223, 0.418) 1px solid;
     margin-right: 5px;
+}
+
+@media (max-width: 900px) {
+    .chart-container {
+        display: block;
+    }
+
+    p.text, .hidden-text {
+        font-size: 1rem !important;
+    }
+
+    .split-page, .habits-list {
+        display: block;
+    }
+
+    .create-habit-form {
+        margin: auto;
+        width: 90%;
+        display: block;
+        height:70vh; 
+    }
+
+    li.habit {
+        margin: 1rem auto 1rem auto;
+        padding: 1rem;
+    }
+
+    .navlinks, a.login {
+        padding: .1rem;
+    }
+
+    #logo {
+        padding-right: .5rem;
+        padding-left: 0;
+    }
+    
+    .check_in, .checked_in, #edit, .update, .delete {
+        font-size: .8rem;
+    }
 }

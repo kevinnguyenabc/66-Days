@@ -8,7 +8,9 @@
             <h1 class="page-title">Archived Habits</h1>
         {% endif %}
     </div>
-
+    <!-- <form action="{{ url_for('blah') }}">
+        <input type="submit">
+    </form> -->
     {% if habits|length == 0 %}
         <div class="homepage">
             {% if not archive %}
@@ -31,7 +33,7 @@
                 {% else %}
                     <li class="habit" id="habit-{{habit.id}}">
                 {% endif %}
-                        <div>
+                        <div id="habit-{{habit.id}}-div" onclick="goToHabit('{{habit.id}}', '{{habit.title}}')">
                             <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
                             <h2 class="habit-title"><a href="{{ url_for('single_habit', habit_id=habit.id, habit_title=habit.title) }}">{{ habit.title }}</a></h2>
                             <div style="--width: {{ habit.checkins|length }}"  class="progress-bar progress-bar-small">
@@ -39,16 +41,16 @@
                             </div>
                             <p class="habit-content">{{ habit.content }}</p>
                             
-                            {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days == habit.checkins[-1].day %} 
+                            {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days <= habit.checkins[-1].day %} 
                                 <a id="{{habit.id}}" class="checked_in" >Checked In! &#10003;</a>
                             {% else %}
-                                <a id="{{habit.id}}" class="check_in" onclick='checkin("{{habit.id}}")'>Check In &#10003;</a>
+                                <a id="{{habit.id}}" class="check_in" onclick='checkin("{{habit.id}}", event)'>Check In &#10003;</a>
                             {% endif %}
                         </div>
                 </li>
             {% else %}
                 <li class="habit" id="habit-{{habit.id}}">
-                    <div>
+                    <div onclick="goToHabit('{{habit.id}}', '{{habit.title}}')">
                         <small class="text-muted">Created on {{ habit.date_created.strftime('%Y-%m-%d') }}</small>
                         <h2 class="habit-title"><a href="{{ url_for('single_habit', habit_id=habit.id, habit_title=habit.title) }}">{{ habit.title }}</a></h2>
                         <div style="--width: {{ habit.checkins|length }}"  class="progress-bar progress-bar-small">
