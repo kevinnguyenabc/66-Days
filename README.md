@@ -34,3 +34,10 @@ including the current streak (how many consecutive days has the user checked in)
 graph detailing the user's checkins over time. Here, the user can send a request to another user 
 to link their habits with one another. If the other user accepts, each user can see whether or not
 the other has checked in for the day in order to keep each other accountable.
+
+
+### Profile
+<img src="/img/Profile.png" width="900" height="450"/>  
+The user profile page gives a general overview of the current progress on their habits, as well as some 
+other stats that they may find useful. The inbox is also located in the profile page, where users can accept 
+or decline requests to link habits.

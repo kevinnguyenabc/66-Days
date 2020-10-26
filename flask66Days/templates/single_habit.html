@@ -22,7 +22,7 @@
                                 {% if habit.checkins|length > 0 and (now.date() - habit.date_created.date()).days <= habit.checkins[-1].day %} 
                                     <a id="{{habit.id}}" class="large checked_in" >Checked In! &#10003;</a>
                                 {% else %}
-                                    <a id="{{habit.id}}" class="large check_in" onclick='checkin("{{habit.id}}"); addData();'>Check In &#10003;</a>
+                                    <a id="{{habit.id}}" class="large check_in" onclick='checkin("{{habit.id}}", event); addData();'>Check In &#10003;</a>
                                 {% endif %}
                                 <a id="edit" class="navlinks text-muted" href="{{ url_for('calendar', habit_id=habit.id) }}">Edit Check Ins</a>
                             </div>

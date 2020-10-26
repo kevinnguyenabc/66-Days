@@ -3,7 +3,6 @@ checkins = checkins.map((value) => parseInt(value));
 console.log(checkins);
 
 let date = new Date(date_created);
-console.log(date);
 
 let checkedInColor = "blue";
 
@@ -11,7 +10,7 @@ let events = [];
 let newCheckIns = [];
 
 for (let i = 0; i < checkins.length; i++) {
-  let newDate = new Date();
+  let newDate = new Date(date_created);
   newDate.setDate(date.getDate() + checkins[i]);
   newCheckIns.push(checkins[i]);
   let int = newDate.getTime() - newDate.getTimezoneOffset() * 60 * 1000;

@@ -11,11 +11,11 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
-    background-image: linear-gradient(to right, #393e4b, #2d3446);
+    background-image: linear-gradient(to bottom, #353a46, #2d3446);
     margin: 0px;
     padding: 0px;
     color: rgb(235, 235, 235);
-    height: 100%;
+    min-height: 100vh;
 }
 
 header {
@@ -781,7 +781,7 @@ tr:hover {
         padding-right: .5rem;
         padding-left: 0;
     }
-    
+
     .check_in, .checked_in, #edit, .update, .delete {
         font-size: .8rem;
     }
